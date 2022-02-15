@@ -336,7 +336,7 @@
 
 + 폰트 상대 단위 (font-relative length units)
 
-  + `em` :  (부모요소에 대해)  상대적인 사이즈를 가짐
+  + `em` :  (부모요소에 대해)  상대적인 사이즈를 가짐 / 배수 단위 (예 : `1.5em`)
   + `%` : (부모요소에 대해) 백분율 단위 / 가변적인 레이아웃에서 사용
 
   + `rem` :  (부모요소의) 상속 영향 안받음 / 최상위 요소(`html`)의 사이즈(`16px`)를 기준으로 배수 단위
@@ -927,7 +927,7 @@
 
 + ```container, rows, column``` 으로 컨텐츠 배치 및 정렬
 
-+ **column : 12개 / grid breakpoints : 6개**
++ **column : 12개 per 1 row / grid breakpoints : 6개**
 
 + 예
 
@@ -937,8 +937,47 @@
   </div>
   ```
 
+  ```html
+  <style>
+    .box{
+      background-color: antiquewhite;
+      border : 1px solid black;
+    }
+  </style>
+  <body>
+    <!-- basic & offset -->
+    <div class="row">
+      <div class="box col-3">1</div>
+      <div class="box col-3">2</div>
+      <div class="box col-3">3</div>
+      <div class="box col-1 offset-1"></div>
+    </div>
   
-
+    <!-- nested -->
+    <div class="row">
+      <div class="box col-2">4</div>
+      <div class="box col-2">5</div>
+      <div class="box col-2">6</div>
+      <div class="box col-6">
+        <!-- nested 되면 col은 해당 row에서 12로 나눠 가짐 -->  
+        <div class="row">
+          <div class="class box col-1">n1</div>
+          <div class="class box col-1">n1</div>
+          <div class="class box col-1">n1</div>
+          <div class="class box col-1">n1</div>
+          <div class="class box col-1">n1</div>
+          <div class="class box col-1">n1</div>
+          <div class="class box col-2">n2</div>
+          <div class="class box col-4">n4</div>
+        </div>
+      </div>
+    </div>  
+  </body>
+  
+  ```
+  
+  
+  
   
 
 ### [2] [breakpoints](https://getbootstrap.com/docs/5.0/layout/breakpoints/)
