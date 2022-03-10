@@ -226,3 +226,14 @@ N = int(sys.stdin.readline())
 
   
 
+
+
+
+
+# 5. vscode
+
+vscode extention : indent-rainbow(파이썬 들여쓰기 가동성 엄청 높아짐)
+
+vscode extention : live Server(웹페이지 새로고침 안해도 vs코드에서 코드 변경될 때마다 웹페이지 갱신됨 웹할때 편함)
+
+꿀팁 ctrl + shift + alt + L을 누르면 한번에 파이썬 글자 형식을 맞출 수 있다.. 깔끔한 코딩을 위한 단축키입니다.. ㅎㅎ
