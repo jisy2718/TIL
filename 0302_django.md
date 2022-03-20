@@ -106,9 +106,11 @@ urlpatterns = [
 
 ```python
 # 10. articles/views.py 작성
+
 # 9에서 views.index 와 같이 사용한 함수들 만들어주기
 from django.shortcuts import redirect, render
-from .models import Article
+from .models import Article    #----------까먹지 말기
+
 # Create your views here.
 def index(request):
     #여기에서 DB의 게시글 데이터를 가져와야 합니다. 
@@ -178,11 +180,11 @@ settings의 TEMPLATE=[ { 'DIRS':[BASE_DIR/'templates'] } ] 작성
 articles/templates/articles/index.html
 
 
-{% extends 'base.html' %}
+{% extends 'base.html' %}  # base.html을 읽게됨. 드러다 block 나오면 해당 html 문서의 해당 block 부분으로 이동
 {% block content %}
   <h1>Index 페이지 입니다.</h1>
   <h1>Articles</h1>
-  <a href=" {% url 'articles:new' %} ">[새 글 쓰기]</a>
+  <a href=" {% url 'articles:new' %} ">[새 글 쓰기]</a>    #url의 밖은 ""여야함.
   <hr>
   {% for article in articles %}
     <p>글 번호 : {{ article.id }}</p>
@@ -203,7 +205,7 @@ articles/templates/articles/index.html
 
 
 
-+ 아래처럼 class 생성시 `from . import Article` 가능해짐
++ 아래처럼 class 생성시 `from . import Article` 가능해짐 [models 참고](https://docs.djangoproject.com/en/4.0/topics/db/models/)
 
 ```python
 # 12. models.py 작성
@@ -215,7 +217,7 @@ from turtle import title, update
 from django.db import models
 
 # Create your models here.
-class Article(models.Model):
+class Article(models.Model):     
     #필드 정의
     title = models.CharField(max_length=20)
     content = models.TextField()
