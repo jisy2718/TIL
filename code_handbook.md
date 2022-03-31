@@ -52,6 +52,22 @@
   %timeit -n 100 -r 1000 function #각 100번도는 루프를 1000번 실행시킴
   ```
 
++ `time`  활용
+
+  ```python
+  import time
+  s = time.time()
+  function()
+  e = time.time()
+  print(e-s) # 걸린 시간
+  ```
+
+  
+
+
+
+
+
 
 
 + 변수명 초기화
