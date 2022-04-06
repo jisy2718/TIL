@@ -57,7 +57,7 @@
 
 ```python
 # 1. Make set
-N = 7
+N = 6
 p = [x for x in range(N+1)] # 스스로가 root(대표자) 가 되도록 초기화
 
 # 2. find set
@@ -83,6 +83,15 @@ def union(x,y):
     root_of_x = find_set(x)
     root_of_y = find_set(y)
     p[root_of_y] = root_of_x  # y의 대표자(root)가, x의 대표자(root)를 가리키도록
+    
+# 4. 위의 표 결과 실행
+union(1, 3)
+print(p[1:])
+union(2, 3)
+print(p[1:])
+union(5, 6)
+print(p[1:])
+print(find_set(6))
 ```
 
 
@@ -100,4 +109,36 @@ def union(x,y):
 
 
 # 그래프 문제
+
+## [1] MST (모든 노드 최소비용 연결)
+
+### (1) PRIM 알고리즘
+
++ 의미
+  + MST에 포함된 정점에서 연결된 간선들 중에 하나씩 **Greedy**하게 선택하면서 MST를 만들어 가는 방식
+
++ 과정
+
+  + 시작 : 임의의 정점 v 선택해서 MST에 포함
+    + 반복 : **MST에 포함된 모든 정점에서 최소비용 간선의 정점 u(not in MST)선택**
+  + 모든 정점 선택될 때까지, 바로 위 과정 반복
+
++ 특성
+
+  + 사이클 안생김
+
+  + diijkstra 와 유사
+
+    
+
+### (2) Kruskal 알고리즘
+
+
+
+
+
+
+
+
+## [2] 특정 노드에서 다른 노드로 가는 최소 비용 계산
 

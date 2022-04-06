@@ -2,6 +2,8 @@
 
 ## 1. 실행순서
 
+
+
 + **manage.py** 가 있는 곳이 BASE_DIR 이다.
 
 ```bash
@@ -13,6 +15,18 @@ source venv/Scripts/activate
 pip install -r requirements.txt  # requirements.txt 에 패키지 정리되어있는 경우 진행
 
 ```
+
++ 설치해야 하는 것들
+
+```bash
+$ pip install django==3.2.12
+$ pip install ipython
+$ pip install django-extensions
+```
+
+
+
+
 
 
 
@@ -731,3 +745,36 @@ index.html, recommndations.html 생성 후 작성
 GET 은 서버로부터 데이터 전송받기
 
 POST 는 서버로 데이터 보내기
+
+
+
+----------------------------
+
+# 0406
+
+html에 extends 있으면, base html을 계속 읽다가, 블럭 만나면, 상속받은 html로 이동하는 것임
+
+FORM 안에서 NAME이 서버에서 KEY값이 됨
+
+return render(request, 'articles/new.html')
+
+return redirect('articles:index')  # url 적어주면 됨(name space 활용해서 작성) (그냥 render처럼 url로 작성하면 안되나)
+
+
+
+## forms
+
+forms.py 생성 후 아래 코드 작성
+
+```python
+from django import forms
+
+class ArticleForm(forms.Form):
+    title = forms.CharField(max_length=10)
+    content = forms.Textarea()
+    
+```
+
+
+
+ko-kr : settings.py
