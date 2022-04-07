@@ -12,13 +12,14 @@ python -m venv venv
 
 source venv/Scripts/activate
 
-pip install -r requirements.txt  # requirements.txt 에 패키지 정리되어있는 경우 진행
+
 
 ```
 
 + 설치해야 하는 것들
 
 ```bash
+$ pip install -r requirements.txt  # requirements.txt 에 패키지 정리되어있는 경우 진행
 $ pip install django==3.2.12
 $ pip install ipython
 $ pip install django-extensions
@@ -736,9 +737,47 @@ index.html, recommndations.html 생성 후 작성
 
 
 
+----
+
+# django project 실행순서
+
+## [1] 가상환경 설치안되어있고, 패키지도 없는 경우
 
 
 
+## [2] 가상환경o, 패키지o경우
+
+```python
+
+```
+
+
+
+## 2. 진행순서
+
+### (1) 생성
+
+```python
+$ django-admin startproject projectname
+$ python manage.py runserver
+$ python manage.py startapp articles
+```
+
+
+
+### (2) 작성
+
+project/settings 에 appnames 추가
+
+project.urls 에 include 추가해서, path('articles/',include('articles.urls'))
+
+
+
+
+
+
+
+-----
 
 
 
@@ -775,6 +814,3 @@ class ArticleForm(forms.Form):
     
 ```
 
-
-
-ko-kr : settings.py
