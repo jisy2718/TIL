@@ -2,6 +2,10 @@
 
 
 
+```
+
+```
+
 
 
 
@@ -170,6 +174,96 @@ forms.errors     # 에러메세지 확인 가능
 
 
 + [위젯사용관련부분](https://django-bootstrap-v5.readthedocs.io/en/latest/widgets.html)
+
+
+
+
+
+
+
+---
+
+# 미디어 파일
+
+
+
+
+
++ settings.py
+
+```python
+# NEW-------------------
+MEDIA_ROOT = BASE_DIR / 'media'   # 여기까지 정해주고, 이후의 경로는 upload_to 가 정함
+# MEDIA_ROOT 는 실제 이미지가 저장되는 공간을 지정해주는 것
+
+MEDIA_URL = '/media/'
+# MEDIA_URL은 사용자가 이미지를 보기위해서 이미지에 대한 요청을 보내는 주소를 설정
+# 개발자모드의 <img src="~~~" > 에 마우스 올려보면 CURRENT SOURCE에서 확인 가능 
+```
+
+
+
+
+
++ enctype을 default에서 바꿔줘야
+
+```django
+# create.html
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>CREATE</h1>
+  <hr>
+  <form action="{% url 'articles:create' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit">
+  </form>
+  <a href="{% url 'articles:index' %}">back</a>
+{% endblock content %}
+
+
+```
+
+```python
+def create(request):
+    if request.method == 'POST':
+        form = ArticleForm(request.POST,files = request.FILES)  # 이미지는 request.FILES에 저장되어서 서버에 보내짐 
+        if form.is_valid():
+            article = form.save()
+            return redirect('articles:detail', article.pk)
+    else:
+        form = ArticleForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'articles/create.html', context)
+```
+
+```django
+# detail.html 에 추가
+{% if article.image %}  # image 없어도 게시글 수정가능?? 뒤에 강의 18분 못들음
+<img src="{{ article.image.url }}" alt="{{ article.image }}">
+{% endif %}
+```
+
+
+
++ 이미지 수정시 필요한 코드
+
+```python
+# 이미지 수정
+# views.update()
+form = ArticleForm(request.POST, request.FILES, instance=article) # 추가
+
+
+# update.html에 아래와 같이 해야 이미지 수정
+<form action="{% url 'articles:create' %}" method="POST" enctype="multipart/form-data">
+```
+
+
+
+
 
 # error 해결
 
@@ -545,7 +639,20 @@ ko-kr : settings.py
   + 사실 views.py에서 `return render(request, 'articles/index.html') ` 에서 `'articles/index.html'`는 HTML 파일이 아니라, 템플릿임
     + 이 템플릿 이용해서 HTML 응답 만드는 것
 
-+ 
+
+
++ appnames/migrations/_\_init\_\_.py 없으면 migrations 되지 않음.
+  + migration 할 때, migration하는 패키지가 있는데, migrations 폴더와, 그 안에 \_\_init\_\_.py 없으면 패키지를 사용 못함
+
+
+
+
+
+
+
+
+
+
 
 
 

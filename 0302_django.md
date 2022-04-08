@@ -13,7 +13,6 @@ python -m venv venv
 source venv/Scripts/activate
 
 
-
 ```
 
 + 설치해야 하는 것들
@@ -741,37 +740,623 @@ index.html, recommndations.html 생성 후 작성
 
 # django project 실행순서
 
-## [1] 가상환경 설치안되어있고, 패키지도 없는 경우
+## 1. 초기 작업
+
+### [1] 가상환경 설치안되어있고, 패키지도 없는 경우
+
+```bash
+# 가상환경 생성 및 활성화
+$ python -m venv venv
+$ source venv/Scripts/activate    # venv 의 앞쪽 경로 잘 생각하기
+
+# package 설치
+$ pip install -r requirements.txt  # requirements.txt 에 패키지 정리되어있는 경우 진행
+
+$ pip install django==3.2.12
+$ pip install ipython                 # django-extensions 에서 shell plus 사용하는 건가?
+$ pip install django-extensions       # settings.py <- 'django_extensions',
+$ pip install django-bootstrap-v5     # settings.py <- 'bootstrap5',
+```
+
++ [django-extention문서](https://django-extensions.readthedocs.io/en/latest/installation_instructions.html)
++ [bootstrap5문서](https://django-bootstrap-v5.readthedocs.io/en/latest/installation.html)
 
 
 
-## [2] 가상환경o, 패키지o경우
+### [2] 가상환경o, 패키지o경우
 
-```python
-
+```bash
+$ source venv/Scripts/activate    # venv 의 앞쪽 경로 잘 생각하기
 ```
 
 
 
 ## 2. 진행순서
 
-### (1) 생성
+### [1] project & app 생성
 
-```python
-$ django-admin startproject projectname
-$ python manage.py runserver
-$ python manage.py startapp articles
+```bash
+$ django-admin startproject projectname . # . 붙이면, 현재 공간에 projectname, manage.py
+										  # . 안붙이면, 현재공간에 projectname fold 생성되고, 내부에 위의 폴더와 파일 생성
+$ python manage.py runserver              # project 잘 생성되었는지 확인
+$ python manage.py startapp appnames      # settings.py <- 'appnames',
 ```
 
 
 
-### (2) 작성
-
-project/settings 에 appnames 추가
-
-project.urls 에 include 추가해서, path('articles/',include('articles.urls'))
+---
 
 
+
+### [2] templates/base.html 생성
+
++ manage.py가 있는 BASE_DIR에 생성
++ ! -> enter 하면 기본 form 생성
+
+```django
+{% load bootstrap5 %}
+{# Load CSS and JavaScript #}
+
+<!DOCTYPE html>
+{% comment %} ko 대신 en 가능 {% endcomment %}
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>exercise</title>
+  {% comment %} <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> {% endcomment %}
+  {% bootstrap_css %}
+</head>
+    
+<body>
+  <div>
+    {% block content %}
+      
+    {% endblock content %}
+  </div>
+  {% comment %} <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> {% endcomment %}
+  {% bootstrap_javascript %}
+</body>
+</html>
+```
+
++ 참고
+
+```django
+# 아래는 django-bootstrap-v5  이용시 쓰는 코드  / # CDN으로 써도됨
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+```
+
+
+
+---
+
+
+
+
+
+### [3] projectname folder
+
+#### (1)  urls.py
+
+```python
+from django.contrib import admin
+from django.urls import path, include
+#---------------게시판에 이미지 업로드를 위한 부분----------------------------
+from django.conf import settings
+from django.conf.urls.static import static
+#-------------------------------------------------------------------------
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('movies/',include('movies.urls')),
+    
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # 이미지 업로드 위한 부분
+```
+
+
+
+#### (2) settings.py
+
+```python
+# 1.
+INSTALLED_APPS = [
+    'appnames',          # 추가
+    'django_extensions', # 추가 sions 철자 주의
+    
+    'django.contrib.admin', ...
+
+# 2.
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates',],  # 이 부분 추가
+
+#---------- 이미지를 업로드 위한 부분-----------
+# 맨 아래에 추가
+MEDIA_ROOT = BASE_DIR / 'media'
+
+MEDIA_URL = '/media/'
+```
+
+
+
+---
+
+
+
+### [3] appfolder
+
+#### (1) urls.py 생성
+
+```python
+from django.urls import path
+from . import views
+
+app_name = 'appnames'
+# 아래는 원하는 작업들 적어주기
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('create/', views.create, name='create'),          # C(생성) # GET / POST 
+    path('<int:pk>/', views.detail, name='detail'),        # R(읽기)
+    path('<int:pk>/update/', views.update, name='update'), # U(수정) # GET / POST
+    path('<int:pk>/delete/', views.delete, name='delete'), # D(삭제)
+
+]
+```
+
+
+
+#### (2) views.py 임시 (model migration하기 위해)
+
+```python
+from django.shortcuts import render, redirect
+# from .models import Movie
+# from .forms import ModelForm
+
+# Create your views here.
+def index(request):
+    pass
+
+def create(request):
+    pass
+
+def detail(request,pk):
+    pass
+
+def update(request,pk):
+    pass
+
+def delete(request,pk):
+    pass
+```
+
+
+
+#### (3) models.py [models.field참고](https://docs.djangoproject.com/en/4.0/ref/models/fields/)
+
++ 모델 생성
+
+```python
+# 1.데이터 유형
+# varchar (20) -> CharField(max_length=20)
+# integer      -> IntegerField()
+# float        -> FloatField()
+# date         -> DateTiemField() # auto_now_add=True : 현재시간추가 / auto_now=True : 현재시간으로 update
+# text         -> TextField
+
+# 2. 코드
+from django.db import models
+# Create your models here.
+class Movie(models.Model):
+    title = models.CharField(max_length=20)
+    audience = models.IntegerField()
+    release_date = models.DateTimeField()
+    score = models.FloatField()
+    description = models.TextField()
+    
+```
+
++ migration
+
+```bash
+$ python manage.py makemigrations  # 모델 설계도 생성 -> db.sqlite3 생성(안에 아무것도 없음)
+$ python manage.py migrate         # 모델 설계도 반영 -> db.sqlite3 table에 스키마&data 생성됨
+```
+
++ makemigrations 후에 
+
+  + 열 추가시 나오는 문구
+
+  > You are trying to add a non-nullable field 'test' to movie without a default; we can't do that (the database needs something to populate existing rows).
+  > Please select a fix:
+  >
+  >  1) Provide a one-off default now (will be set on all existing rows with a null value for this column)
+  >  2) Quit, and let me add a default in models.py
+  > Select an option:
+
+  + 1번은 새로 생긴 열의 defalut 값을 내가 설정, 2번은 컴퓨터가 설정
+
+
+
+
+
+#### (4) admin.py [문서](https://docs.djangoproject.com/en/4.0/ref/contrib/admin/)
+
++ 위에서 정의한 Model Movie가 Admin site에서 데이터 생성,조회,수정,삭제 가능하도록
++ 유의 : url에서 /admin 했는데, OperationalError at /admin/ 뜨면 `$ python manage.py migrate` 해주면 됨
+
+##### (a) 계정 생성
+
+```bash
+# 1. admin 계정 생성
+$ python manage.py createsuperuser  # email 은 입력안해도 됨
+```
+
+
+
+##### (b) admin 사이트에 app 가져오기
+
+```python
+# 1. appname(folder)의 admin.py 에 작성
+# [방법1] 아래코드 입력시 admin 사이트에 해당 app 가져오고, DB와 상호작용 가능 
+from django.contrib import admin
+from .models import Article  # Article 은 정의한 model class
+admin.site.register(Article) # 입력
+
+# [방법2] 원하는 variable이 admin에 뜨도록 하려면
+from .models import Article
+
+class ArticleAdmin(admin.ModelAdmin):
+    list_display = ('pk','title','content','created_at','updated_at')
+
+admin.site.register(Article, ArticleAdmin) # 수정해서 입력
+```
+
+
+
+#### (c) login
+
++ http://127.0.0.1:8000/admin/ 에서 로그인
+
+
+
+#### (5) forms.py [widget문서](https://docs.djangoproject.com/en/4.0/ref/forms/widgets/) / [form field 문서](https://docs.djangoproject.com/en/4.0/ref/forms/fields/)
+
+```python
+from django import forms
+from .models import Moive # models.py의 class
+
+
+class ArticleForm(forms.ModelForm):
+    # (원하는 모델 class) model form 에 대한 내용을 meta 안에 적는 것
+    class Meta:
+        model = Moive          # models.py의 class
+        fields = '__all__'     # model 의 필드와 가장 적합한 것으로 만들어줌 /# 튜플,리스트도가능
+        #exclude = ('title',)  # 제외할 것 선택
+        # fields와 exclude 동시사용 불가
+        
+#--------------아래와 같이 쓰면, widget 사용 가능-----------------------------------------
+# class ArticleForm(forms.ModelForm):
+
+#     title = forms.CharField(
+#         label ='제목',
+#         widget = forms.TextInput(
+#             attrs ={
+#                 'class':'test form-control',
+#                 'placeholder' : '제목을입력하세요',
+#                 'maxlength' : 10,
+#             }
+#         ),
+#         # error messages
+#         error_messages={
+#             'required' : "제목을 입력하세요!",  #'required' 는 에러종류
+#         }
+#     )
+
+#     content = forms.CharField(
+#         label='내용',
+#         widget =forms.Textarea(
+#             attrs={
+#                 'class':'test2 form-control',
+#                 'placeholder':"여기에 내용을 작성하세요",
+#                 'cols' : 30,
+#                 'rows': 10,
+#             }
+#         ),
+#         error_messages={
+#             'required':'내용을 입력하세요!',
+#         }
+#     )
+    
+#     class Meta:
+#         model = Article # 이친구가 가지는 것과 똑같이 field 만들어라
+#         fields = "__all__"
+#----------------------------------------------------------------------
+```
+
+
+
++ How to read widget & form document
+
+  + This is form filed document (widget is same to this)
+
+  ![widget](image/pjt06_widget.PNG)
+
+  +  see default widget & content & extra argument
+    + you can learn how to use extra argument by hyperlinks in the body of choices
+
+
+
+
+
+#### (6) views.py
+
+```python
+from django.shortcuts import render, redirect
+from .models import Movie
+from .forms import MovieForm
+from django.views.decorators.http import require_http_methods, require_POST, require_safe
+
+# Create your views here.
+@require_http_methods(['GET'])
+def index(request):
+   moives = Movie.objects.all()
+   context = {
+       'movies' : moives,
+   }
+   return render(request, "movies/index.html",context) 
+
+    
+@require_http_methods(['GET','POST'])
+def create(request):
+    # POST
+    if request.method =='POST':
+        form = MovieForm(request.POST)
+        if form.is_valid:
+            movie = form.save()
+            return redirect('movies:detail',movie.pk)
+
+
+    # GET
+    else:
+        form = MovieForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'movies/create.html',context
+    # (위) is_valid False 경우 form 에 작성한 내용 그대로 다시 render (그러면 else(GET) 경우는 form 형식만 보내짐)
+
+
+
+@require_http_methods(['GET'])
+def detail(request,pk):
+    movie = Movie.objects.get(pk=pk)
+    context = {
+        'movie' : movie,
+    }
+    return render(request, 'movies/detail.html', context)
+
+
+
+@require_http_methods(['GET','POST'])
+def update(request,pk):
+    movie = Movie.objects.get(pk=pk)
+    # 입력한 것 업데이트 요청
+    if request.method=="POST":
+        form = MovieForm(request.POST,instance=movie)
+        if form.is_valid():
+            movie = form.save()
+            return redirect('movies:detail',movie.pk)
+
+    # 수정 페이지 요청
+    else:
+        form = MovieForm(instance=movie)
+    context = {
+        'movie':movie,
+        'form' : form,
+    }
+    return render(request, 'movies/update.html',context)
+
+@require_POST
+def delete(request,pk):
+    movie = Movie.objects.get(pk=pk)
+    movie.delete()
+    return redirect('movies:index')
+```
+
+
+
+
+
+### [4] appfolder/templates (widget 없는 기본형)
+
+#### (1) index.html
+
+```django
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="mx-5 my-3">
+<h2> INDEX </h2>
+<a href="{% url 'movies:create' %}"> CREATE </a>
+<hr>
+{% for movie in movies %}
+<p> <a href="{% url 'movies:detail' movie.pk %}">  {{ movie.title }} </a> </p> 
+<p> {{ movie.score }} </p>
+
+<hr>
+{% endfor %}
+</div>
+{% endblock content %}
+
+```
+
+![index](image/pjt06_index_init.PNG)
+
+#### (2) create.html
+
+```django
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="mx-auto" style="width:50rem;">
+<h2> CREATE </h2>
+<hr>
+
+<form action="{% url 'movies:create' %}" method="POST">
+  {% csrf_token %}
+
+    
+    #-----------------------1~4methods are common from here to </form>---    
+{% comment %} 1번 방법 as_p {% endcomment %}
+  {{ form.as_p }}
+    
+    
+#----------------------------------------------------
+{% comment %} modelform에 작성된 title과 content {% endcomment %}
+{% comment %} 2번 방법 form.field
+{{ form.title.errors }}
+{{ form.title.label_tag }}
+{{ form.title }}   
+<hr>
+{{ form.content.errors }}
+{{ form.content.label_tag }}
+{{ form.content }} 
+{% endcomment %}
+
+    
+#------------------------------------------------------------------
+{% comment %} 3번 방법 {% endcomment %}
+{% comment %} 
+{% for field in form %}
+  {% if field.errors %}
+  에러발생시원하는 경고문구
+  {% for error in field.errors  %}
+      <div class='alert alert-danger' role="alert">
+    {{ error }}
+  {% endfor %}
+
+  </div>
+  {% endif %}
+
+  {{ field.errors }}
+  {{ field.label_tag }}
+  {{ field }}   
+{% endfor %}
+ {% endcomment %}
+
+    
+#------------------------------------------------------------------
+{% comment %} 4번 방법 bootstrap은 아래 submit 부분 필요 없음  {% endcomment %}
+<p>
+  <input type="submit" value="CREATE" class="btn btn-primary">
+</p>
+
+
+
+ {% comment %} 4번방법 bootstrap5 이용 {% endcomment %}
+{% comment %} 
+  {% bootstrap_form form %}
+  {% buttons %}
+    <button type="submit" class="btn btn-primary">
+      Submit
+    </button>
+  {% endbuttons %}
+ {% endcomment %}
+
+
+</form>
+<hr>
+<a href="{% url 'movies:index' %}" class="btn btn-info"> BACK </a>
+</div>
+{% endblock content %}
+```
+
+![create](image/pjt06_create_init.PNG)
+
+
+
+
+
+
+
+#### (3) detail.html
+
+```django
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="text-center"> DETAIL </h2>
+<hr>
+
+<div class="card mx-auto" style="width: 18rem;">
+  <img class="card-img-top" src="{{ movie.poster_url }}" alt="Card image cap">
+  <div class="card-body">
+<h5 class="card-title">{{ movie.title }}</h5>
+    <p class="card-text"> Audience : {{ movie.audience }}</p>
+    <p class="card-text"> Release Date : {{ movie.release_date }}</p>
+    <p class="card-text"> Genre : {{ movie.genre }}</p>
+    <p class="card-text"> Score : {{ movie.score }}</p>
+    <p class="card-text"> {{ movie.description }}</p>
+    <div class="d-flex justify-content-start">
+
+        <a href="{% url 'movies:update' movie.pk %}" class="btn btn-primary">UPDATE</a>
+
+    <form action="{% url 'movies:delete' movie.pk %}" method="POST" class="mx-2">
+      {% csrf_token %}
+      <input type="submit" value="DELETE" class="btn btn-danger">
+    </form>
+  </div>
+  </div>
+</div>
+
+<div class="mx-3 my-3">
+<a href="{% url 'movies:index' %}" class="btn btn-warning">BACK</a>
+</div>
+
+
+{% endblock content %}
+```
+
+![detail](image/pjt06_detail_init.PNG)
+
+
+
+#### (4) UPDATE
+
+```django
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="mx-auto" style="width: 18rem;">
+<h2> UPDATE </h2>
+<hr>
+<form action="{% url 'movies:update' movie.pk %}" method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Submit" class="btn btn-primary">
+  <a href="{% url 'movies:index' %}" class="btn btn-primary">Cancel</a>
+</form>
+<hr>
+<a href="{% url 'movies:index' %}" class="btn btn-info">BACK</a>
+</div>
+{% endblock content %}
+```
+
+![update](image/pjt06_update_init.PNG)
+
+
+
+
+
+
+
++ `<div class="mx-auto" style="width: 18rem;">` 로 가운데 정렬 가능
+  + style="width" 부분이 있어야 함
 
 
 
@@ -798,6 +1383,10 @@ FORM 안에서 NAME이 서버에서 KEY값이 됨
 return render(request, 'articles/new.html')
 
 return redirect('articles:index')  # url 적어주면 됨(name space 활용해서 작성) (그냥 render처럼 url로 작성하면 안되나)
+
+
+
++ sqlite 실행 어떻게?
 
 
 
