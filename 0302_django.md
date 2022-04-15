@@ -1403,3 +1403,54 @@ class ArticleForm(forms.Form):
     
 ```
 
+
+
+
+
+# 참고사항
+
++ 게시글 작성 부분
+
+  ![](image/bootstrapform.png)
+
+  과 같이 시원시원하게 작성하려면 다음 코드 이용
+
+  ```django
+  # create.html
+  
+  {% extends 'base.html' %}
+  {% load bootstrap5 %}
+  
+  {% block content %}
+    <h1>CREATE</h1>
+    <form action="" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <input type="submit">
+    </form>
+    <hr>
+    <a href="{% url 'articles:index' %}">[back]</a>
+  {% endblock %}
+  ```
+
++ 수정도 마찬가지
+
+  ```django
+  # update.html
+  
+  {% extends 'base.html' %}
+  {% load bootstrap5 %}
+  
+  {% block content %}
+    <h1>UPDATE</h1>
+    <form action="" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <input type="submit">
+    </form>
+    <hr>
+    <a href="{% url 'articles:index' %}">[back]</a>
+  {% endblock %}
+  ```
+
+  

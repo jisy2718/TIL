@@ -179,7 +179,8 @@
 
 
 
-
++ `time.sleep(원하는시간초)`
+  + 원하는 시간초만큼 멈췄다가 진행
 
 
 
@@ -212,6 +213,19 @@ N = int(sys.stdin.readline())
 * ```pip install --upgrade pip```
 
 + ```pip list``` : 저장된 library 보여줌
+
++ freeze
+  + `pip freeze > requirements.txt`
+
+
+
+
+
+
+
+
+
+
 
 
 
