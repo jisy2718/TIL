@@ -116,16 +116,89 @@ print(find_set(6))
 
 + 의미
   + MST에 포함된 정점에서 연결된 간선들 중에 하나씩 **Greedy**하게 선택하면서 MST를 만들어 가는 방식
+  
 + 과정
 
   + 시작 : 임의의 정점 v 선택해서 MST에 포함
     + 반복 : **MST에 포함된 모든 정점에서 최소비용 간선의 정점 u(not in MST)선택**
   + 모든 정점 선택될 때까지, 바로 위 과정 반복
+  
 + 특성
 
   + 사이클 안생김
   + diijkstra 와 유사
+  
 + 코드
+
+  ```python
+  # 1. arr 이용
+  V, E = map(int,input().split())
+  arr = [[0]*(V+1) for _ in range(V+1)]
+  
+  for _ in range(E):
+      s, e, w = map(int,input().split())
+      arr[s][e] = w
+      arr[e][s] = w
+  
+  def prim(start):
+      MST = [0] * (V + 1)
+  
+      # start 번노드에서 시작한다고 가정
+      # start 번노드에서 이동할 수 있는 최소거리 노드 x 로 이동
+      # start, x번 노드에서 이동할 수 있는 최소거리노드 x2로 이동
+      # MST에 포함되지 않아야 함
+      #... 이를 반복
+      MST[start] = 1
+      w_sum = 0
+      for _ in range(1,V):  # 총 V-1 개 간선 선택하면 됨
+          min_idx = 0
+          min_val = 0xfffffffff
+          for i in range(1,V+1):  # 모든 노드들을 돌면서 MST에 들어간 것에서 최소거리 찾으면됨
+              if MST[i] == 1:
+                  for j in range(1,V+1):
+                      if min_val > arr[i][j] and MST[j]==0:
+                          min_val = arr[i][j]
+                          min_idx = j
+          MST[min_idx] = 1
+          w_sum += min_val    # 비용 더하기
+      print(w_sum)
+      return
+  prim(1)
+  
+  
+  
+  # 2. arrL 이용
+  
+  V, E = map(int,input().split())
+  arrL = [[]*(V+1) for _ in range(V+1)]
+  for _ in range(E):
+      s, e, w = map(int,input().split())
+      arrL[s].append((e,w))
+      arrL[e].append((s,w))
+  
+  def prim(start):
+      MST = [0] * (V + 1)
+      MST[start] = 1
+      w_sum = 0
+      for _ in range(1,V): # start 제외 V-1 개 경로 고르면 됨
+          min_idx = 0
+          min_val = 0xfffffff
+          for i in range(1,V+1):
+              if MST[i] == 1:
+                  for end_weight in arrL[i]:
+                      e, w = end_weight
+                      if MST[e]==0 and min_val > w :
+                          min_val = w
+                          min_idx = e
+          MST[min_idx] = 1
+          w_sum += min_val        # 비용 더하기
+      print(w_sum)
+      return
+  prim(1)
+  
+  ```
+
+  
 
 
 
@@ -133,7 +206,53 @@ print(find_set(6))
 
 ### (2) Kruskal 알고리즘
 
++ 의미
 
++ 과정
+
++ 특성
+
++ 코드
+
+  ```python
+  V, E = map(int,input().split())
+  edges = []
+  for _ in range(E):
+      s, e, w = map(int,input().split())
+      edges.append([w, s, e])
+  
+  # make set
+  tree = [x for x in range(V+1)]
+  
+  # find set
+  def find_set(x):
+      if tree[x] == x:
+          return x
+      else:
+          return find_set(tree[x])
+      
+  # union set
+  def union(x,y):
+      root_x = find_set(x)
+      root_y = find_set(y)
+      tree[root_y] = root_x
+  
+  # 아래가 Kruskal 알고리즘
+  MST = list(range(1,V+1))
+  w_sum = 0
+  # sorting
+  # cycle 안생기면 선택
+  # 다 선택하면 끝
+  edges.sort()
+  for i in range(E):
+      w, s, e = edges[i]
+      if find_set(s) != find_set(e):
+          union(s,e)
+          w_sum += w
+  print(w_sum)
+  ```
+
+  
 
 
 
