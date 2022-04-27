@@ -34,8 +34,10 @@
 # 중개 테이블
 
 + N : M 관계를, 중개 테이블을 이용해서 1 : N 과 1 : M 관계로 만들어냄
-  + 즉 N : M 을 1:N, M:1 처럼 바꿔야함
+  + 즉 N : M 을 1:N, M:1 처럼 바꿔야함(아래)
   + **환자 >-< 의사  (N:M)**     ->    **환자 -< 중계테이블 >- 의사 (1 : N, M : 1)**
+  
+  
 
 ## 1. 직접생성 (ManyToManyField 이용 x)
 
@@ -225,7 +227,7 @@ patient2.doctors.add(doctor1, through_defaults={'symptom': 'flu'})
 
 
 
-#### (2)중개테이블 모델링 한 경우
+#### (2) 중개테이블 모델링 한 경우 (through이용)
 
 + 추가적인 속성 (`symptom` , `reserved_at`) 활용가능
 
@@ -387,22 +389,6 @@ def likes(request, article_pk):
 </div>
 ...
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -652,9 +638,23 @@ if article.like_users.filter(pk=request.user.pk).exists():
 
 
 
-### [2] get_object_or_404(User, username=username)
+### [2] get_object_or_404(klass, \*args, \*\*kwargs) [문서](https://docs.djangoproject.com/ko/4.0/intro/tutorial03/#a-shortcut-get-object-or-404)
 
-#### (1) 코드
+#### (1) 설명
+
+**klass**
+
++ Model class, Manager, QuerySet Instance from which to get the object
+
+
+
+**\**kwargs**
+
++ Lookup parameter, which should be in the format accepted by `get()` and `filter()`
+
+
+
+#### (2) 코드
 
 ```python
 # accounts/views.py
@@ -668,6 +668,10 @@ def profile(request, username):
     
     return render(request, 'accounts/profile.html',context)
 ```
+
+
+
+
 
 
 
@@ -711,23 +715,21 @@ def profile(request, username):
 
 
 
+### [5] 0418_hw4, 5
 
 
 
+# 모르는 것
 
+## 1. 여러가지
 
-
-
-
-# 질문사항
-
-+  bootstrap form 수정
++ bootstrap form 수정
 
   https://django-bootstrap-v5.readthedocs.io/en/latest/templatetags.html#bootstrap-field 참고
 
   
 
-+  is_valid() 통과 못하면? else의 context에 담기는 것?
++ is_valid() 통과 못하면? else의 context에 담기는 것?
 
   ```python
   @require_http_methods(['GET', 'POST'])
@@ -753,95 +755,207 @@ def profile(request, username):
 
 
 
-+ custom.Meta 의 필드가 왜 더 적은지?
-
- ```python
- class CustomUserCreationForm(UserCreationForm):
- 
-     class Meta(UserCreationForm.Meta):
-         model = get_user_model()
-         # fields = UserCreationForm.Meta.fields + ('email',)
-         fields = '__all__'
- ```
-
----
-
-생각
-
- https://github.com/django/django/blob/main/django/contrib/auth/forms.py
-
-```python
-class UserCreationForm(forms.ModelForm):
-    """
-    A form that creates a user, with no privileges, from the given username and
-    password.
-    """
-
-    error_messages = {
-        "password_mismatch": _("The two password fields didn’t match."),
-    }
-    password1 = forms.CharField(
-        label=_("Password"),
-        strip=False,
-        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
-        help_text=password_validation.password_validators_help_text_html(),
-    )
-    password2 = forms.CharField(
-        label=_("Password confirmation"),
-        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
-        strip=False,
-        help_text=_("Enter the same password as before, for verification."),
-    )
-
-    class Meta:
-        model = User
-        fields = ("username",)
-        field_classes = {"username": UsernameField}
-```
-
-\__all__ 하면 User의 모든 field 나오는 이유가 
-
-위의 Meta에서  model = User이므로,  UserCreationForm.Meta 하면 그냥 USER model 가져오는 것?이지않을까?
-
-
-
 
 
 + 필터
 
- 팔로워 : {{ person.followers.all|length }} / 팔로우 : {{ request.user.followings.all|length }}
+  + 팔로워 : `{{ person.followers.all|length }}` 
+  + 팔로우 : `{{ request.user.followings.all|length }}`
+
+  + dtl 필터(https://docs.djangoproject.com/en/4.0/ref/templates/builtins/)
 
  
 
+
+
++ with [문서](https://docs.djangoproject.com/en/4.0/ref/templates/builtins/)
+
+  + DB에서 expensive 하게 작동하는 method 결과 저장해서 사용
+
+  + `{% with  followers=person.followers.all following=person.followings.all  %}`
+
+    code
+
+    `{% endwith %}`
+
+  + `person.followers.all` 과 같이 오래걸리는 것들 변수 저장해서 사용
+
+
+
+
+
  
 
-+ with
++ `filter(pk=request.user.pk).exists()` 와   `article.like_users.all() `차이
 
-• https://docs.djangoproject.com/en/4.0/ref/templates/builtins/
+  + `article.like_users.all()` 는 DB에서 데이터 가져온 것이고 
 
-`{% with  followers=person.followers.all following=person.followings.all  %}`
+  + `filter(pk=request.user.pk).exists()` 는 filter 부분까지는 DB에서 하는 것
 
- 
-
-여기서 변수선언해서 쓸 수 있음 / 
-
-- DB에서 expensive 하게 작동하는 method 결과 저장해서 사용?
-
- 
-
-`{% endwith %}`
-
- 
-
-+ 
-
-·     `article.like_users.all()` 는 DB에서 데이터 가져온 것이고 
-
-·    `filter(pk=request.user.pk).exists():` 는 filter 부분까지는 DB에서 하는 것?
+  + `filter` 는 sql의 WHERE 절이므로, 걸러져서 들어오게 됨
 
  
 
  
 
 + ` person = get_object_or_404(get_user_model(), username=username)` (model=, keyword= 으로 받은 것들 get() 함수에 넘김)
+
+
+
+
+
++ `class="d-none"` 외우기 : 사라지게 하는 것
+
+  
+
++ User Custom
+
+  + 일부 프로젝트에서는 Django의 내장 User 모델이 제공하는 인증 요구사항이 적절하지 않을 수 있음
+  + User에 없는 필드속성 이용할 때 활용
+    + 예를 들면 User에 없는 email 속성 같은 것으로 유저를 구별할 필요가 있는 경우
+
+
+
+
+
+## 2. 상속관계에서 fields 찾는 순서 
+
+### [1] Meta &rarr; 상속하는 부모 &rarr;  자신
+
++ **field를 가져오는 순서**가, **Meta, 상속하는 부모, 자신** 순으로 가져오는 것 같음
+
+
+
+### [2] `fields = UserCreationForm.Meta.fields` 와 `fields = '__all__'` 차이가 왜 생기는지
+
++ 아래의 코드에서 `fields`에 따른 차이가 무엇?
+
++ ```python
+  # forms.py----------------------------------------
+  class CustomUserCreationForm(UserCreationForm):
+  
+      class Meta(UserCreationForm.Meta):
+          model = get_user_model()   # 현재 User는 아래에 정의된 CustomUser
+          
+          # fields = UserCreationForm.Meta.fields + ('email',)   # 이 부분
+          fields = '__all__'                                     # 이 부분
+  
+          
+  # models.py-----------------------------------------------
+  class User(AbstractUser):
+      followings = models.ManyToManyField('self', symmetrical=False, related_name='followers')
+  ```
+
+  #### (1) UserCreationForm.Meta.fields 경우
+
+  **출력되는 fields**
+
+  + `UserCreationForm.Meta` 의 field
+
+    + username
+
+  + `UserCreationForm` 의 field
+
+    + password1
+
+    + password2
+
+      
+
+  **위 처럼 출력되는 이유**
+
+  + ```python
+    # forms.py----------------------------------------
+    class CustomUserCreationForm(UserCreationForm):
+        class Meta(UserCreationForm.Meta):
+            model = get_user_model()
+            fields = UserCreationForm.Meta.fields + ('email',)                
+    ```
+
+  + **field를 가져오는 순서**가, **Meta, 상속하는 부모, 자신** 순으로 가져오는 것 같음
+
+  + 위에서, 
+
+    **Meta** : `UserCreationForm.Meta.fileds` 의
+
+    +  username 을 먼저 가져오고 그 다음으로
+
+    **부모 UserCreationForm** : 에서 
+
+    + password1, password2 를 가져오고, 그 다음으로
+
+    **자신 CustomUserCreationForm** 의 filed
+
+    +  (현재 없음)를 가져옴
+
+     
+
+  #### (2) '\_\_all\_\_' 경우
+
+  +  현재 `get_user_model()` 이 `AbstractUser` 이므로, 해당 field 모두 가져옴
+
+    
+
+  **출력되는 필드**
+
+  + **AbstractBaseUser** 의 fileds
+
+  + **PermissionsMixin** 의 fields
+
+  + **AbstractUser** 의 fields
+
+  + **User(Custom,)** 의 fields
+
+  + **UserCreationForm** 의 fields
+
+  + **CustomUserCreationForm**의 fields
+
+    
+
+  **위처럼 출력되는 이유**
+
+  + fields들은 github [forms.py]( https://github.com/django/django/blob/main/django/contrib/auth/forms.py) [models.py]( https://github.com/django/django/blob/main/django/contrib/auth/models.py) 문서 참고
+
+  + 현재 상속 구조가 아래와 같음
+
+  + **field를 가져오는 순서**가, **Meta, 상속하는 부모, 자신** 이므로 **CustomUserCreationForm** 기준으로 보면
+
+    + **Meta** &rarr; **get_user_model()** 의 모든 fields &rarr; **User** 의 부모 까지 계속 올라가기 &rarr; fields1 ~ 4 출력
+    + **상속하는 부모 : UserCreationForm** 의 fields 5 출력
+    + **자신** : fields 6 출력
+
+  + ```python
+    class AbstractBaseUser(models.Model):
+        # fields 들 .. 1
+        
+    class PermissionsMixin(models.Model):
+        # fields 들 ... 2
+    class AbstractUser(AbstractBaseUser, PermissionsMixin):
+        # fields 들..  3
+        
+    class User(AbstractUser):
+        followings = models.ManyToManyField('self', symmetrical=False, related_name='followers')
+        # fields 4
+        
+    class UserCreationForm(forms.ModelForm):
+        # fileds 5
+        
+    #forms.py----------------------------------------
+    class CustomUserCreationForm(UserCreationForm):
+         # fileds 6
+        class Meta(UserCreationForm.Meta):
+            model = get_user_model()  # User(AbstractUser) 인 상황
+            fields = '__all__'
+        
+    ```
+
+  + 그래서 `__all__` 하면 위의 1,2,3,4,5,6순서로 fields 가져오게 됨. (아래그림)
+
+    ![](image/Inheritance.png)
+
+    
+
+
+
+
 
