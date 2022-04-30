@@ -67,7 +67,7 @@
 
 ## 0427( JS - 기초3)
 
-### HW : 1, 2-2, 2-3, 2-4
+### HW : 1, 2
 
 ###  WS : 1 -  a tag 속성 / 2 - create, append / 3 - innertext 위치
 
@@ -164,3 +164,9 @@
     ```
 
   + 
+
+## 0428( JS - 기초4)
+
+### HW : 2([event 발생시점](https://developer.mozilla.org/ko/docs/Web/Events))
+
+###  WS : 2 - replaceAll 여러개 / 3 - reset & submit의 preventDefault(안하면, form의 action으로 url계속이동하려고함) / 5 -loadash & ? 삼항연산자 & background-img
