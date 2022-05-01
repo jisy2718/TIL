@@ -1,4 +1,6 @@
-# 03-01 데이터 구조 (Data Structure)
+[toc]
+
+# 데이터 구조 (Data Structure)
 
 + **method** 
 

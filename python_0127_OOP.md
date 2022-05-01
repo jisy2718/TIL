@@ -1,4 +1,6 @@
-# 04 . OOP
+[toc]
+
+# OOP
 
 ## 1. OOP (객체지향 프로그래밍)
 
@@ -539,4 +541,8 @@ print(p3.speceis)      # 인스턴스 변수에서 species를 먼저 찾음
   + 인스턴스 &rarr; 자식 클래스 &rarr; 부모 클래스 순으로 찾아봄
   + ```ClassName.__mro__``` or ```ClassName.mro()```
 
+  
+  
+  
+  
   
