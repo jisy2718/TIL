@@ -12,12 +12,12 @@
 
 ## 1. git
 
-| 제목                 | 내용                                  | 특이사항 |
-| -------------------- | ------------------------------------- | -------- |
-|                      |                                       |          |
-| git_0112-0114_review | bash / repo 초기작업 / branch & merge | 미완     |
-| git_0415_협업방식    | undoing / 협력과정 / forking workflow | 미완     |
-|                      |                                       |          |
+| 제목                 | 내용                                            | 특이사항 |
+| -------------------- | ----------------------------------------------- | -------- |
+|                      |                                                 |          |
+| git_0112-0114_review | bash / repo 초기작업 / branch & merge           | 미완     |
+| git_0415_협업방식    | undoing / 협력과정 / forking workflow / fixture | 미완     |
+|                      |                                                 |          |
 
 
 
@@ -84,13 +84,20 @@
 
 
 
-## 5. Django 
+## 5. Django & DB
 
-| 제목                   | 내용                                                 | 특이사항 |
-| ---------------------- | ---------------------------------------------------- | -------- |
-|                        |                                                      |          |
-|                        |                                                      |          |
-| 0418_db3_ManyToMany.md | ManyToManyFeild 이용해서, **follow, like** 기능 구현 |          |
+| 제목                           | 내용                                                         | 특이사항                 |
+| ------------------------------ | ------------------------------------------------------------ | ------------------------ |
+| Dj01_0302_TemplateView_Routing | 웹사이트 만들기, django project 실행 순서                    |                          |
+| Dj02_0308_DjangoModel          | **Model, migration, ORM**(Shell_plus, CRUD, 크기비교, Aggregation, Annotation, 와일드카드, order by) |                          |
+| DJ03_0406_Form_ModelForm       | 2개 작성된거 합쳐서 여기에 넣기                              |                          |
+| Dj04_0411_Auth                 | Login & Logout , Signup, 계정삭제, 정보수정                  |                          |
+| Dj05_0420_RESTAPI              | **Serializer** , URI, Response                               | DRF(DjangoRestFramework) |
+| Dj05_0420_RESTAPI_월말평가대비 |                                                              |                          |
+|                                |                                                              |                          |
+| DB01_0314_RDBMS_SQL            | DB:RDBMS / SQL (테이블 생성,삭제, CRUD, WHERE, Aggregate Function, LIKE, ORDER BY , GROUP BY, ALTER TABLE) |                          |
+| DB02_0413_OneToMany            |                                                              |                          |
+| DB03_0418_ManyToMany           | ManyToManyFeild 이용해서, **follow, like** 기능 구현         |                          |
 
 
 
@@ -124,11 +131,11 @@
 
 ## 7. pjt
 
-| 제목            | 내용                                        | 특이사항 |
-| --------------- | ------------------------------------------- | -------- |
-| pjt01_0121_json | json 파일 python으로 읽기 / try-except 사용 |          |
-|                 |                                             |          |
-|                 |                                             |          |
+| 제목            | 내용                                                         | 특이사항 |
+| --------------- | ------------------------------------------------------------ | -------- |
+| pjt01_0121_json | json 파일 python으로 읽기 / try-except 사용                  |          |
+|                 |                                                              |          |
+| pjt09           | **구글로그인**(설명만)<br />실습은 **영화추천**<br />유저의 장르 선택을 서버로부터 받아와서, 이 장르에 해당하는 영화를 응답하는 과정이 어려웠음 |          |
 
 
 

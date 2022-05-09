@@ -1,8 +1,34 @@
+[toc]
+
 # 자주 다시 검색하여 찾게되는 코드들
 
 # 1. Python
 
-+ ```isinstance```
+## [1] loop로 변수명 만들기
+
++ ```python
+  # 1. 숫자할당
+  for i in range(4):
+      globals()['node_{}'.format(i)] = i
+      globals()[f'node_{i}'] = i
+      
+      print(globals()['node_{}'.format(i)])
+      print(globals()[f'node_{i}'])
+  
+  # node_i 꼴로 변수 생성됨
+  
+  
+  # 2. 문자열
+  names = ['A','B','C']
+  for name in names:
+      globals()['node_{}'.format(name)] = 1
+  ```
+
++ 
+
+
+
++ `isinstance`
 
   ```python
   1test = {1:3}
