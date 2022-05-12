@@ -192,3 +192,55 @@
 ### HW : 1, 2 :Web API, Task Q, Call Stack, Event Loop
 
 ### ws 
+
+
+
+
+
+
+
+# Vue
+
+## 0504 (vue)
+
+### HW : 1,2,3
+
+#### SPA, Vue.js의 반응형, :v-bind, @v-on, v-model/양방향
+
+### WS : LOTTO
+
+
+
+
+
+
+
+## 0509 (Vue CLI)
+
+### HW :  1, 2, 3
+
+#### Cycle Hook, npm, Vue CLI에서 Vanilla JS 기능(DOM 조작, WEB API호출 등) 사용 가능
+
+#### Vue Life Cycle Hook : created, mounted, updated
+
+### WS : LOTTO 
+
+#### Vue CLI & Vue Router
+
+
+
+
+
+
+
+## 0510 (Vue)
+
+### HW : 1, 2, 3, 4
+
+#### .native, v-on, 부모 자식 간의 데이터 전달 및 수정
+
+### WS : Youtube API
+
+#### vue 컴포넌트 간의 데이터 흐름 이해 , props & emit
+
+### Practice  : props & emit
