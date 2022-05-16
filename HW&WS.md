@@ -244,3 +244,26 @@
 #### vue 컴포넌트 간의 데이터 흐름 이해 , props & emit
 
 ### Practice  : props & emit
+
+
+
+
+
+
+
+## 05xx
+
+
+
+
+
+## 0516 Vue with server
+
+### HW : 1,2
+
+#### Client-Server(Vue-DRF) , API 서버 인증방식, CORS
+
+### WS
+
+#### library활용(auth,signup)
+
