@@ -257,7 +257,7 @@
 
 
 
-## 0516 Vue with server
+## 0516 Vue with server 1
 
 ### HW : 1,2
 
@@ -267,3 +267,20 @@
 
 #### library활용(auth,signup)
 
+
+
+
+
+## 0517 Vue with server 2
+
+
+
+
+
+
+
+## 0518 Vue with server 3
+
+### HW
+
+#### Navigation Guard, axios 요청시 발급받은 토큰 포함한 요청 보내는 법

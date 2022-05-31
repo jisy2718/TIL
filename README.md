@@ -130,18 +130,25 @@
 
 
 
-## 7. pjt
+## 8. pjt
 
 | 제목            | 내용                                                         | 특이사항 |
 | --------------- | ------------------------------------------------------------ | -------- |
 | pjt01_0121_json | json 파일 python으로 읽기 / try-except 사용                  |          |
-|                 |                                                              |          |
-| pjt09           | **구글로그인**(설명만)<br />실습은 **영화추천**<br />유저의 장르 선택을 서버로부터 받아와서, 이 장르에 해당하는 영화를 응답하는 과정이 어려웠음 |          |
+| pjt02           | BeautifulSoup, python에서 API활용해 데이터 획득 + `.json()` 함수 이용해 데이터를 dictionary로 변환, dictionary 정렬 |          |
+| pjt03           | nav, footer, active class, modal, toggle, carousel, card, d-none, pagination |          |
+| pjt04           | vscode interpreter 선택,  django project 진행순서1           |          |
+| pjt05           | shell_plus 사용, admin 사용, html에서 날짜데이터 형식바꾸기, notnull constraint error |          |
+| pjt06           | django project 진행순서2 , bootstrap card 사용               |          |
+| pjt07           | variable routing, user class custom + settings.py 경로 추가, git 협력과정, Form의 인자로 받는 것들이 다양해서 헷갈림 |          |
+| pjt08           | fixture, serializers & 역참조 manager & 재정의 이용한 pk가 아닌 title 과 같은 value 출력, git 협력과정, |          |
+| pjt09           | **구글로그인**(설명만)<br />실습은 **영화추천**<br />추천 알고리즘 : 유저의 장르 선택을 서버로부터 받아와서, 이 장르에 해당하는 영화를 응답하는 과정이 어려웠음<br /> |          |
 | pjt10           | **vuex** 활용, **tmdb** 에서 영화데이터 **API요청**으로 가져오기(HomeView.vue), create() 이용해서, 렌더링 시 함수 바로 실행시키기(**create()**), vue에서 **bootstrap** 사용법, **lodash** , **첫 pull** 받은 경우 `$ npm install` 하기 |          |
+| final           | html에서 axios 이용해 TMDB에 영화데이터 API 요청 + json으로 변환하기 |          |
 
 
 
-## 8. HW & WS 관련
+## 9. HW & WS 관련
 
 | 제목 | 내용 | 특이사항 |
 | ---- | ---- | -------- |
@@ -151,3 +158,19 @@
 
 
 
+
+
+
+
+
+
+
+
+# 공부할 것
+
++ JS, Vue  문법 구분
++ 0516 HW 내용
++ session id와 cookie로 authentication하는 것
++ SITE_ID = 1 왜 하는 것인지
++ 라우팅
++ .env.local
