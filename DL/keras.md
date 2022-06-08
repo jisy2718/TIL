@@ -1,5 +1,11 @@
 [toc]
 
+딥마인드
+
+어텐션 기반 딥넷
+
+gato (600여개 task가능)
+
 
 
 # practice 1
@@ -302,3 +308,247 @@ val_ds = tf.keras.preprocessing.image_dataset_from_directory(
 )
 ```
 
+
+
+
+
+
+
+# 2. practice2
+
+
+
+## [1] CNN
+
+### (1) GPU 메모리 필요할 때마다 할당
+
+````PYTHON
+gpu_growth = True
+
+if gpu_growth:
+    physical_devices = tf.config.list_physical_devices('GPU')
+    try:
+        tf.config.experimental.set_memory_growth(physical_devices[0], True)
+    except:
+        # Invalid device or cannot modify virtual devices once initialized.
+        pass
+````
+
+
+
+### (2) np.expand_dims()
+
+```python
+def expand(input_img):
+    return np.expand_dims(input_img, axis=-1) # axis=-1로하면 가장 마지막으로 하게 됨
+
+x_train = expand(x_train)
+print(x_train.shape)
+>>> (48000,28,28,1)
+```
+
+
+
+### (3) Conv2D, MaxPool2D
+
+#### (a) 모델
+
+```python
+model = tf.keras.models.Sequential([
+    tf.keras.layers.Conv2D(filters=64, kernel_size=(3,3), padding='same', activation='relu' ,input_shape=(28,28,1)),
+    tf.keras.layers.MaxPool2D(pool_size=(2,2), strides=(2,2)),
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(10, activation='softmax')
+])
+
+loss_fn = tf.keras.losses.SparseCategoricalCrossentropy()
+optim_fn = tf.keras.optimizers.Adam(lr=0.001)
+model.compile(optimizer=optim_fn,
+              loss=loss_fn,
+              metrics=['accuracy'])
+```
+
+
+
+#### (b) callback & fit
+
+```python
+checkpoint_dir = './training_checkpoints_cnn'
+checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt_{epoch}")
+
+#학습률을 점점 줄이기 위한 함수
+def decay(epoch):
+    if epoch < 3:
+        return 1e-3
+    elif epoch >=3 and epoch < 7:
+        return 1e-4
+    else:
+        return 1e-5
+    
+callbacks = [
+    tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_prefix, save_weights_only = True),
+    tf.keras.callbacks.LearningRateScheduler(decay)
+]
+
+# fit
+hist = model.fit(x_train, y_train, epochs=10, callbacks=callbacks, validation_data=(x_valid, y_valid))
+```
+
+
+
+#### (c) plot
+
+
+
+```python
+acc = hist.history['accuracy']
+val_acc = hist.history['val_accuracy']
+
+loss = hist.history['loss']
+val_loss = hist.history['val_loss']
+
+plt.figure(figsize=(8, 8))
+plt.subplot(2, 1, 1)
+plt.plot(acc, label='Training Accuracy')
+plt.plot(val_acc, label='Validation Accuracy')
+plt.legend(loc='lower right')
+plt.ylabel('Accuracy')
+plt.ylim([min(plt.ylim()),1])
+plt.title('Training and Validation Accuracy')
+
+plt.subplot(2, 1, 2)
+plt.plot(loss, label='Training Loss')
+plt.plot(val_loss, label='Validation Loss')
+plt.legend(loc='upper right')
+plt.ylabel('Cross Entropy')
+plt.ylim([0,1.0])
+plt.title('Training and Validation Loss')
+plt.xlabel('epoch')
+plt.show()
+```
+
+
+
+#### (d) 평가 & 예측
+
+```python
+model.evaluate(x_test, y_test, verbose=2)
+predictions = model.predict(x_test)
+```
+
+
+
+
+
+## [2] Sequential API & Functional API
+
++ Keras에서 모델을 만드는 방법은 크게 [Sequential API](https://www.tensorflow.org/guide/keras/sequential_model)를 이용하는 방법과 [Functional API](https://www.tensorflow.org/guide/keras/functional)를 이용하는 방법이 있음
+
+### (1) Sequential API
+
++ 1개의 입력 텐서와 1개의 출력 텐서가 있는 일반 레이어 스택에 적합
+
+
+
+### (2) Functional API
+
++ Sequential API보다 유연한 설계 가능
+
++ import
+
+  ```python
+  import tensorflow as tf
+  from tensorflow.keras.layers import Input, Dense, Conv2D, Concatenate, Flatten, Add, MaxPooling2D, GlobalAveragePooling2D
+  ```
+
+  ```python
+  !pip install pydot pydotplus graphviz
+  ```
+
+  ```python
+  # 그림으로 구성보기
+  tf.keras.utils.plot_model(model_res)
+  ```
+
+  
+
++ 코드1
+
+  ```python
+  inputs = Input(shape=(784)) #먼저 Input layer를 만들기
+  x = Dense(100)(inputs) # 각 layer의 output을 다음 layer의 input으로 넣어주기
+  x = Dense(200)(x)
+  outputs = Dense(300)(x)
+  model_func = tf.keras.Model(inputs=inputs, outputs=outputs) #마지막엔 tf.keras.Model을 이용
+  ```
+
++ 코드 2
+
+  ```python
+  inputs = Input(shape=(28, 28, 1))
+  #----
+  x = Conv2D(filters=10, kernel_size=(3,3), padding='same')(inputs)
+  shortcut = x
+  x = Conv2D(filters=20, kernel_size=(3,3), padding='same')(x)
+  x = Conv2D(filters=30, kernel_size=(3,3))(x)
+  
+  outputs = Add()([x,shortcut])
+  model_res = tf.keras.Model(inputs=inputs, outputs= outputs)
+  >>> ValueError : Inputs have incompatible shapes. Received shapes (26, 26, 30) and (28, 28, 10)   # x, shortcut의 shape를 맞춰줘야 함! 아래처럼 수정!
+  x = Conv2D(filters=30, kernel_size=(3,3))(x)
+  -> x = Conv2D(filters=10, kernel_size=(3,3), padding='same')(x)
+  
+  ```
+
+
+
+
+# HW2
+
+## [1] Inception module 구현
+
++ MaxPooling2D의(pool_size, strides, padding)
+  + strides는 default로 pool_size와 같음
+  + 그래서 크기 조정하려면 padding='same' or 'valid' / strides 모두 잘 조절해야 함
+
+
+
+
+
+
+
+
+
+# 4. Practice 3
+
+## [1] MobileNet V2 구현
+
++ `BatchNormalization(axis, momentum, epsilon)`
+  +  https://keras.io/api/layers/normalization_layers/batch_normalization/
++ `DepthwiseConv2D(kernel_size, strides, padding, use_bias, depthwise_regularizer)` 
+  + https://keras.io/api/layers/convolution_layers/depthwise_convolution2d/
++ 핵심개념
+  + Expansion
+  + Depthwise convolution
+  + Linear bottleneck
+  + Residual
+  + 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 공부할 것
+
++ Batch Normalization
++ 
