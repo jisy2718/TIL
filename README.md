@@ -8,7 +8,85 @@
 
 
 
-# 배운 내용
+
+
+# 학습 내용(교체중)
+
++ python
+  + [기초](python/0117_기초.md)
+    + 변수
+    + 자료형, 형변환
+    + 컨테이너
+    + 연산자
+    + 프로그램 구성 단위
+  + [제어문](python/0118_제어문.md)
+    + input
+    + 반복문
+      + for, while, enumerate, list (dict, set) comprehension
+    + 반복문제어
+      + break, continue, pass, for-else
+  + [함수](python/0119_함수.md)
+    + input, output
+    + scope (변수, 수명, LEGB)
+    + map, filter, zip, lambda, recursive function
+  + [모듈](python/0120_모듈.md)
+    + 모듈과 패키지 생성 및 불러오기
+    + pip 명령어
+    + 가상 환경
+  + [데이터구조](python/0124_데이터구조.md)
+    + 순서있는 구조 : string, list, tuple
+    + 순서없는 구조 : set, dictionary
+    + mutable, immutable
+    + 얕은 복사, 깊은 복사
+  + [에러와 예외처리](python/0125_에러와예외처리.md)
+    + 에러와 예외 예시
+    + try-except
+    + raise, assert
+  + [OOP](python/0127_OOP.md)
+    + OOP란
+    + 인스턴스, magic method
+    + class 변수, class method
+    + namespace
+    + 객체지향 핵심개념 4가지
+
+
+
++ 알고리즘
+
+  + [DFS&BFS](알고리즘/DFS_BFS.md)
+
+    + DFS, BFS 와 코드
+
+  + [트리&힙](알고리즘/트리.md)
+
+    + 트리, 이진트리, 순회, 저장방법
+    + 힙 : 힙의 종류, 연산(삽입/삭제), 활용
+
+  + [순열조합부분집합](알고리즘/순열조합부분집합.md) : total과 합쳐야
+
+  + [서로소집합\_그래프문제\_MST_최소비용거리](알고리즘/서로소집합_그래프문제_MST_최소비용거리.md) : total과 합쳐야
+
+    + 그래프
+
+    + MST
+
+    + 서로소집합
+
+      
+
+  + [분할정복&백트래킹](알고리즘/분할정복_quick_merge_백트래킹_nqueen.md)  : total과 합쳐야
+
+    + quick sort, merge sort, nqueen
+
+
+
+
+
+
+
+
+
+# 학습 내용
 
 ## 1. git
 
