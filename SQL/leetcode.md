@@ -30,7 +30,10 @@
 
 
 
+#### 20220627
 
++ [607](https://leetcode.com/problems/sales-person/)
+  + 3 개의 table 이용 / join활용
 
 
 
