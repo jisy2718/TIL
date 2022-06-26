@@ -92,9 +92,14 @@
 ### LEETCODE&백준
 
 + LEETCODE
-  + 알고리즘
-  + SQL
+  + 알고리즘(python)
+  + [SQL](SQL)
+    + [문제풀이](SQL/leetcode.md)
+    + [내용정리](SQL/SQL.md)
 + 백준
+  + [알고리즘(python)](../0ssafy/2_알고리즘/(my_code) 알고리즘/bakjun/README.md)
+  + [알고리즘(python)](https://github.com/jisy2718/algorithm/blob/master/bakjun/README.md)
+
 
 
 
