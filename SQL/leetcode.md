@@ -5,9 +5,11 @@
 + [SQL 스터디 플랜](#sql 스터디 플랜)
   + [SQL1](#sql 1)
     + [Day1 select](#day1 select)
-
+    + [20220627](#20220627)
+    + [Day2](#Day2-Select-&-Order)
 + [SQL1-공부내용](#sql1-공부내용)
   + [Day1](#Day1)
+  + [Day2](#Day2)
 
 
 
@@ -37,6 +39,23 @@
 
 
 
+#### Day2 Select & Order
+
++ [1873](https://leetcode.com/problems/calculate-special-bonus/)
+  + 몫연산자 `%`, `if `문으로 값 대치
++ [627](https://leetcode.com/problems/swap-salary/)
+  + `update set`
++ [196](https://leetcode.com/problems/delete-duplicate-emails/)
+  + `delete`
+
+
+
+
+
+
+
+
+
 
 
 
@@ -60,3 +79,29 @@
 
 + `NULL` 값의 경우 `COL !=2` 와 같이 하면 잡히지 않음. `COL IS NULL` 처럼 잡아줘야 함
   + [584번참고](https://leetcode.com/problems/find-customer-referee/)
+
+
+
+### Day2
+
++ `DELETE FROM 테이블이름 WHERE 조건들;`
+
+  + ```sql
+    # p1 테이블에서, p2 테이블과 email 같고, id가 큰 것 삭제
+    delete p1 from person p1, person p2
+    where p1.email = p2.email and p1.id > p2.id;
+    ```
+
+  + 
+
++ `UPDATE 테이블이름 SET 컬럼이름 = 설정할 값 WHERE 조건들;`
+
+  + salary table의 sex column의 값을 서로 바꾸기 : update & set
+
+  ```sql
+  update salary
+  set sex = if(sex='m','f','m');
+  ```
+
++ 
+

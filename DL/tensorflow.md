@@ -224,9 +224,118 @@
 
 
 
+#### [10] 과소/과대적합
+
++ 과소적합 (Underfitting)
+
+  - 학습 데이터를 충분히 학습하지 않아 성능이 매우 안 좋은 경우
+
+  - 모델이 지나치게 단순한 경우
+
+  - 해결 방안
+
+    - 충분한 학습 데이터 수집
+
+    - 보다 더 복잡한 모델 사용
+
+    - 에폭수(epochs)를 늘려 충분히 학습
+
+      
+
++ 과대적합 (Overfitting)
+
+  - 모델이 학습 데이터에 지나치게 맞추어진 상태
+
+  - 새로운 데이터에서는 성능 저하
+
+  - 데이터에는 잡음이나 오류가 포함
+
+  - 학습 데이터가 매우 적을 경우
+
+  - 모델이 지나치게 복잡한 경우
+
+  - 학습 횟수가 매우 많을 경우
+
+  - 해결방안
+
+    - 다양한 학습 데이터 수집 및 학습
+
+    - 모델 단순화: 파라미터가 적은 모델을 선택하거나, 학습 데이터의 특성 수를 줄임
+
+    - 정규화(Regularization)을 통한 규칙 단순화
+
+    - 적정한 하이퍼 파라미터 찾기
+
+      
+
+##### 과대적합(overfitting)과 과소적합(underfitting) 방지 방법
+
+- 모델의 크기 축소
+- 가중치 초기화(Weight Initializer)
+- 옵티마이저(Optimizer)
+- 배치 정규화(Batch Normalization)
+- 규제화(Regularization)
+- 드롭아웃(Dropout)
 
 
-2시간 28분부터 ~ 딥러닝모델학습기술
+
+
+
+##### 옵티마이저
+
++ SGD
+
+  + `optimizer = SGD(learning_rate=0.001, momentum=0.9, nesterov=True)`
+
+    
+
++ AdaGrad(Adaptive Gradient)
+
+  - 가장 가파른 경사를 따라 빠르게 하강하는 방법
+  - 학습률을 변화시키며 진행하며 적응적 학습률이라고도 부름
+  - 경사가 급할 때는 빠르게 변화, 완만할 때는 느리게 변화
+  - 간단한 문제에서는 좋을 수는 있지만 딥러닝(Deep Learning)에서는 자주 쓰이지 않음
+  - 학습률이 너무 감소되어 전역최소값(global minimum)에 도달하기 전에 학습이 빨리 종료될 수 있기 때문
+  - `optimizer = Adagrad(learning_rate=0.001)`
+
+  
+
++ RMSProp (Root Mean Square Propagation)
+  - AdaGrad를 보완하기 위한 방법으로 등장
+  - 합 대신 지수의 평균값을 활용
+  - 학습이 안되기 시작하면 학습률이 커져서 잘 되게하고, 학습률이 너무 크면 학습률을 다시 줄임
+  - `optimizer = RMSprop(learning_rate=0.001, rho=0.9)`
+
+
+
++ Adam (Adaptive Moment Estimation)
+  - 모멘텀 최적화와 RMSProp의 아이디어를 합친 것
+  - 지난 그래디언트의 지수 감소 평균을 따르고(Momentum), 지난 그레디언트 제곱의 지수 감소된 평균(RMSProp)을 따름
+  - 가장 많이 사용되는 최적화 방법
+  - `optimizer = Adam(learning_rate=0.001, beta_1=0.9, beta_2=0.999)`
+
+
+
+
+
+###### Momentum
+
+- 운동량을 의미, 관성과 관련
+- 공이 그릇의 경사면을 따라서 내려가는 듯한 모습
+- 이전의 속도를 유지하려는 성향
+- 경사하강을 좀 더 유지하려는 성격을 지님
+- 단순히 SGD만 사용하는 것보다 적게 방향이 변함
+- Momentum 수식
+
+
+
+
+
+##### 가중치초기화
+
+
+
+
 
 
 
