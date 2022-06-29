@@ -7,9 +7,11 @@
     + [Day1 select](#day1 select)
     + [20220627](#20220627)
     + [Day2](#Day2-Select-&-Order)
+    + [Day3 String processing function](#day3-string-processing-function)
 + [SQL1-공부내용](#sql1-공부내용)
   + [Day1](#Day1)
   + [Day2](#Day2)
+  + [Day3](#day3)
 
 
 
@@ -47,6 +49,19 @@
   + `update set`
 + [196](https://leetcode.com/problems/delete-duplicate-emails/)
   + `delete`
+
+
+
+
+
+#### Day3 String processing function
+
+**다시풀기**
+
++ [1667](https://leetcode.com/problems/fix-names-in-a-table/)
+  + `UPPER(), LOWER(), SUBSTRING(), CONCAT()`
++ [1484](https://leetcode.com/problems/group-sold-products-by-the-date/)
+  + `GROUP_CONCAT(field_name ORDER BY filed_name SEPORATOR ',')`
 
 
 
@@ -103,5 +118,27 @@
   set sex = if(sex='m','f','m');
   ```
 
-+ 
 
+
+
+
+### Day3
+
++ 첫글자만 대문자만들기
+
+  ```SQL
+  select Users.user_id, CONCAT(UPPER(SUBSTR(Users.name,1,1)), SUBSTR(LOWER(Users.name),2)) name               from Users 
+  ```
+
++ [GROUP_CONCAT 블로그참고](https://fruitdev.tistory.com/16)
+
+  
+
+  + ```
+    1. 기본형 : group_concat(필드명)
+    2. 구분자 변경 : group_concat(필드명 separator '구분자')
+    3. 중복제거 : group_concat(distinct 필드명)
+    4. 문자열 정렬 : group_concat(필드명 order by 필드명)
+    ```
+
+    
