@@ -44,7 +44,7 @@
 #### Day2 Select & Order
 
 + [1873](https://leetcode.com/problems/calculate-special-bonus/)
-  + 몫연산자 `%`, `if `문으로 값 대치
+  + 몫연산자 `%`, `IF`문으로 값 대치
 + [627](https://leetcode.com/problems/swap-salary/)
   + `update set`
 + [196](https://leetcode.com/problems/delete-duplicate-emails/)
@@ -63,11 +63,19 @@
 + [1484](https://leetcode.com/problems/group-sold-products-by-the-date/)
   + `GROUP_CONCAT(field_name ORDER BY filed_name SEPORATOR ',')`
 
++ [1527](https://leetcode.com/problems/patients-with-a-condition/)
+  + `LIKE "%"` 
 
 
 
+#### Day4 Union & Select
 
-
++ [1965](https://leetcode.com/problems/employees-with-missing-information/)
+  + `UNION()`
++ [1795](https://leetcode.com/problems/rearrange-products-table/)
+  + `UNION()`
++ [608](https://leetcode.com/problems/tree-node/)
+  + `CASE WHEN`
 
 
 
