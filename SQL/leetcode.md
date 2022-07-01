@@ -60,11 +60,14 @@
 
 + [1667](https://leetcode.com/problems/fix-names-in-a-table/)
   + `UPPER(), LOWER(), SUBSTRING(), CONCAT()`
+
 + [1484](https://leetcode.com/problems/group-sold-products-by-the-date/)
   + `GROUP_CONCAT(field_name ORDER BY filed_name SEPORATOR ',')`
 
 + [1527](https://leetcode.com/problems/patients-with-a-condition/)
   + `LIKE "%"` 
+
+  
 
 
 
@@ -77,6 +80,21 @@
 + [608](https://leetcode.com/problems/tree-node/)
   + `CASE WHEN`
 
++ [176](https://leetcode.com/problems/second-highest-salary/)
+  + `null`을 만들기 위해, 이중 select 문이용
+
+
+
+
+
+#### Day5 Union
+
++ ​	[175](https://leetcode.com/problems/combine-two-tables/)
+  + `LEFT JOIN`
+
++ [1581](https://leetcode.com/problems/customer-who-visited-but-did-not-make-any-transactions/)
+  + `LEFT JOIN`
+  + 손님 TABLE, 거래 TABLE 이용해서, 거래 없는 손님 찾기
 
 
 
@@ -101,6 +119,7 @@
   + [1757번참고](https://leetcode.com/problems/recyclable-and-low-fat-products/discuss/1062936/SQL-1-liner-solution-(This-is-a-FB-DE-interview-question))
 
 + `NULL` 값의 경우 `COL !=2` 와 같이 하면 잡히지 않음. `COL IS NULL` 처럼 잡아줘야 함
+  
   + [584번참고](https://leetcode.com/problems/find-customer-referee/)
 
 
@@ -149,4 +168,23 @@
     4. 문자열 정렬 : group_concat(필드명 order by 필드명)
     ```
 
-    
+
+
+
+
+
+### Day4
+
++ `[]`를 `NULL`로 만들려면, `[]`를 SELECT 하면 됨
+
+  + ```sql
+    select (select distinct salary 
+    from employee
+    order by salary desc
+    limit 1 offset 1) SecondHighestSalary
+    ```
+
++ `IFNULL` 사용법
+
+  + `IFNULL(컬럼명, "NULL시 대체값")`
+  + `IF(IS NULL(컬럼명), "NULL시 대체값", "NULL 아닐 경우 값")`
