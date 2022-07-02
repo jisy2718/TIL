@@ -8,10 +8,13 @@
     + [20220627](#20220627)
     + [Day2](#Day2-Select-&-Order)
     + [Day3 String processing function](#day3-string-processing-function)
+    + [Day4 Union & Select](#day4-union-&-select)
+    + [Day5 Union](#day5-union)
 + [SQL1-공부내용](#sql1-공부내용)
-  + [Day1](#Day1)
-  + [Day2](#Day2)
+  + [Day1](#day1)
+  + [Day2](#day2)
   + [Day3](#day3)
+  + [Day4](#day4)
 
 
 
@@ -89,12 +92,37 @@
 
 #### Day5 Union
 
-+ ​	[175](https://leetcode.com/problems/combine-two-tables/)
++ [175](https://leetcode.com/problems/combine-two-tables/)
   + `LEFT JOIN`
-
 + [1581](https://leetcode.com/problems/customer-who-visited-but-did-not-make-any-transactions/)
   + `LEFT JOIN`
   + 손님 TABLE, 거래 TABLE 이용해서, 거래 없는 손님 찾기
++ [1148](https://leetcode.com/problems/article-views-i/discuss/422348/Three-approaches-(MYSQL))
+  + 3가지 방법의 풀이해보기
+    + distinct 이용
+    + 이중 select 이용
+    + distinct 대신 group by 이용
+
+
+
+
+#### Day 6
+
++ [197](https://leetcode.com/problems/rising-temperature/)
+
+  + 날짜연산
+
+  + `subdate(날짜, +- 숫자하면, 그만큼의 날을 더하거나 빼기)`
+
+    + 예
+
+      ```sql
+      subdate(2022-01-03, 2) => 2022-01-05
+      subdate(2022-01-03, -2) => 2022-01-01
+      ```
+
++ [607](https://leetcode.com/problems/sales-person/)
+  + 3개 table 연산
 
 
 
@@ -188,3 +216,28 @@
 
   + `IFNULL(컬럼명, "NULL시 대체값")`
   + `IF(IS NULL(컬럼명), "NULL시 대체값", "NULL 아닐 경우 값")`
+
+
+
+
+
+#### Day6
+
++ `subdate(date, 숫자)` 연산방법
+
+  ```SQL
+  subdate(2022-01-03, 2) => 2022-01-05
+  subdate(2022-01-03, -2) => 2022-01-01
+  ```
+
++ 같은 table의 서로 다른 행끼리도 연산 가능하다.
+
+  아래 처럼 하면, 같은 table의 앞, 뒤 행 끼리의 열(컬럼)에 대해서 연산이 진행됨
+
+  ```sql
+  select w2.Id id
+  from weather w1, weather w2
+  where subdate(w2.recordDate, 1) = w1.recordDate AND w1.temperature < w2.temperature
+  ```
+
+  
