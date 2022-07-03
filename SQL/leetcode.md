@@ -106,7 +106,7 @@
 
 
 
-#### Day 6
+#### Day6
 
 + [197](https://leetcode.com/problems/rising-temperature/)
 
@@ -125,6 +125,18 @@
   + 3개 table 연산
 
 
+
+
+
+#### Day7
+
++ [1141](https://leetcode.com/problems/user-activity-for-the-past-30-days-i/)
+  + `datediff(날짜1, 날짜2) = 날짜1 - 날짜2 의 정수 output` 이용!
+
++ [1693](https://leetcode.com/problems/daily-leads-and-partners/)
+  + `group by` 에 2개 컬럼 
+
++ [1729](https://leetcode.com/problems/find-followers-count/)
 
 
 
@@ -221,7 +233,7 @@
 
 
 
-#### Day6
+### Day6
 
 + `subdate(date, 숫자)` 연산방법
 
@@ -241,3 +253,19 @@
   ```
 
   
+
+
+
+### Day7
+
++ `datediff(날짜1, 날짜2)`
+
+  + 날짜1 - 날짜2 를 정수 output
+
+    
+
++ `timestampdiff(단위, 날짜1, 날짜2)`
+
+  + 단위로는
+    + second, minute, hour, day
+    + week, month, quarter, year
