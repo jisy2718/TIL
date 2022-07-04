@@ -140,6 +140,26 @@
 
 
 
+#### Day8
+
++ [586](https://leetcode.com/problems/customer-placing-the-largest-number-of-orders/)
+  + 주문자, 주문번호가 주어질 때, 가장 주문 많이한 사람 찾기
+  + `group by` & `order by` 이용
+
++ [511](https://leetcode.com/problems/game-play-analysis-i/)
+  + 플레이어들의 로그인 기록이 있을 때, 각 플레이어의 첫 로그인 날짜 구하기
++ [1890](https://leetcode.com/problems/the-latest-login-in-2020/)
+  + timestamp 에서 특정 년도를 조회하는 여러 방법 해보기
+    + year 함수
+    + like 2020% 등 : 이게 더 빠름!
++ [1741](https://leetcode.com/problems/find-total-time-spent-by-each-employee/)
+  + select 에서 - (빼기) 연산 가능
+  + 여러 날짜에 대해 노동자들의, 들어가는 시간, 나가는 시간 주어 졌을 때, 각 날짜별로 노동자들의 노동시간 합 구하기
+
+
+
+
+
 ## SQL1-공부내용
 
 ### Day1
