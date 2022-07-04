@@ -10,11 +10,19 @@
     + [Day3 String processing function](#day3-string-processing-function)
     + [Day4 Union & Select](#day4-union-&-select)
     + [Day5 Union](#day5-union)
+    + [Day6 Union](#Day6-Union)
+    + [Day7 Function](#Day7-Function)
+    + [Day8 Function](#Day8-Function)
+    + [Day9 Control of Flow](#Day9-Control-of-Flow)
+    + 
 + [SQL1-공부내용](#sql1-공부내용)
   + [Day1](#day1)
   + [Day2](#day2)
   + [Day3](#day3)
   + [Day4](#day4)
+  + [Day6][#Day6]
+  + [Day7](#Day6)
+  + [Day8](#Day8)
 
 
 
@@ -106,7 +114,7 @@
 
 
 
-#### Day6
+#### Day6 Union
 
 + [197](https://leetcode.com/problems/rising-temperature/)
 
@@ -128,7 +136,7 @@
 
 
 
-#### Day7
+#### Day7 Function
 
 + [1141](https://leetcode.com/problems/user-activity-for-the-past-30-days-i/)
   + `datediff(날짜1, 날짜2) = 날짜1 - 날짜2 의 정수 output` 이용!
@@ -140,7 +148,7 @@
 
 
 
-#### Day8
+#### Day8 Function
 
 + [586](https://leetcode.com/problems/customer-placing-the-largest-number-of-orders/)
   + 주문자, 주문번호가 주어질 때, 가장 주문 많이한 사람 찾기
@@ -153,8 +161,25 @@
     + year 함수
     + like 2020% 등 : 이게 더 빠름!
 + [1741](https://leetcode.com/problems/find-total-time-spent-by-each-employee/)
-  + select 에서 - (빼기) 연산 가능
+  + `select` 에서 - (빼기) 연산 가능
   + 여러 날짜에 대해 노동자들의, 들어가는 시간, 나가는 시간 주어 졌을 때, 각 날짜별로 노동자들의 노동시간 합 구하기
+
+
+
+
+
+#### Day9 Control of Flow
+
++ [1393](https://leetcode.com/problems/capital-gainloss/)
+  + 사고 판 내역이 한 테이블에 있을 때, 이익이 얼마인지!
+  + `if`로 - 만들어 주기
++ [1407](https://leetcode.com/problems/top-travellers/)
+  + 명단 테이블과 이동거리 테이블이 있을 때, 각 사람들의 이동거리를 합해서 많이 이동한 순으로 보여주기
+  + `left join`, `if` 로는 null을 0으로 처리
+
++ [1158](https://leetcode.com/problems/market-analysis-i/)
+  + 2개 테이블 join 할 때, on에 and조건 넣으면 null도 0으로 처리할 수 있음
+    + where에 넣으면 처리가 안됨..null인 것들이 없어져서 0으로 못만듦.
 
 
 
@@ -289,3 +314,10 @@
   + 단위로는
     + second, minute, hour, day
     + week, month, quarter, year
+
+
+
+### Day8
+
++ where에서 timestamp에 대해서, 특정 년도 고를 때, year 보다 like 이용하는 것이 빠름
++ select 문에서 - 연산 가능하다.
