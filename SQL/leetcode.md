@@ -14,7 +14,7 @@
     + [Day7 Function](#Day7-Function)
     + [Day8 Function](#Day8-Function)
     + [Day9 Control of Flow](#Day9-Control-of-Flow)
-    + 
+    + [Day10 Where](#Day10-Where)
 + [SQL1-공부내용](#sql1-공부내용)
   + [Day1](#day1)
   + [Day2](#day2)
@@ -180,6 +180,31 @@
 + [1158](https://leetcode.com/problems/market-analysis-i/)
   + 2개 테이블 join 할 때, on에 and조건 넣으면 null도 0으로 처리할 수 있음
     + where에 넣으면 처리가 안됨..null인 것들이 없어져서 0으로 못만듦.
+
+
+
+#### Day10 Where
+
++ [182](https://leetcode.com/problems/duplicate-emails/) : Duplicate Emails
+  + `group by` + `having` 으로 중복데이터만 뽑기
+  + `self join` 으로도 가능 : 비추
+
++ [1050](https://leetcode.com/problems/actors-and-directors-who-cooperated-at-least-three-times/)  : Actors & Directors 3번이상 같이 작업한 것 찾기
+  + `group by` + `having` 으로 중복데이터만 뽑기
+
+
+
++ [1587 : Bank Account Summary II](https://leetcode.com/problems/bank-account-summary-ii/)
+  + `join`, `group by`, `having` 이용해서 계좌 잔액이 10000원 초과인사람찾기
+
+
+
++ [1084. Sales Analysis III](https://leetcode.com/problems/sales-analysis-iii/)
+  + 
+
+
+
+
 
 
 
