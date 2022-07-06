@@ -55,9 +55,16 @@
 #### Day2 Select & Order
 
 + [1873](https://leetcode.com/problems/calculate-special-bonus/)
+  
   + 몫연산자 `%`, `IF`문으로 값 대치
+  
+  + ```SQL
+    SELECT if( name not like "M%" && employee_id%2=1 , salary, 0)
+    ```
+  
 + [627](https://leetcode.com/problems/swap-salary/)
   + `update set`
+  
 + [196](https://leetcode.com/problems/delete-duplicate-emails/)
   + `delete`
 
@@ -70,11 +77,56 @@
 **다시풀기**
 
 + [1667](https://leetcode.com/problems/fix-names-in-a-table/)
-  + `UPPER(), LOWER(), SUBSTRING(), CONCAT()`
-
+  
+  + `UPPER(), LOWER(), SUBSTR(컬럼,시작글자,끝글자(없으면끝까지)), CONCAT()`
+  
+    + ```SQL
+      select user_id, concat(upper(substr(name,1,1)), lower(substr(name,2))) name
+      ```
+  
+      
+  
 + [1484](https://leetcode.com/problems/group-sold-products-by-the-date/)
+  
+  + 하나의 컬럼에 여러 종류 데이터 행별로 있는 것, 묶어서 하나로 만들기
+  
+    + 예
+  
+    + ```
+      Input: 
+      Activities table:
+      +------------+------------+
+      | sell_date  | product     |
+      +------------+------------+
+      | 2020-05-30 | Headphone  |
+      | 2020-06-01 | Pencil     |
+      | 2020-06-02 | Mask       |
+      | 2020-05-30 | Basketball |
+      | 2020-06-01 | Bible      |
+      | 2020-06-02 | Mask       |
+      | 2020-05-30 | T-Shirt    |
+      +------------+------------+
+      Output: 
+      +------------+----------+------------------------------+
+      | sell_date  | num_sold | products                     |
+      +------------+----------+------------------------------+
+      | 2020-05-30 | 3        | Basketball,Headphone,T-shirt |
+      | 2020-06-01 | 2        | Bible,Pencil                 |
+      | 2020-06-02 | 1        | Mask                         |
+      +------------+----------+------------------------------+
+      ```
+  
   + `GROUP_CONCAT(field_name ORDER BY filed_name SEPORATOR ',')`
-
+  
+    + ```SQL
+      SELECT sell_date, count(DISTINCT(product)) num_sold, group_concat(DISTINCT(product) ORDER BY product ASC) products
+      FROM Activities
+      GROUP BY sell_date
+      ORDER BY sell_date
+      ```
+  
+    
+  
 + [1527](https://leetcode.com/problems/patients-with-a-condition/)
   + `LIKE "%"` 
 
@@ -171,13 +223,24 @@
 #### Day9 Control of Flow
 
 + [1393](https://leetcode.com/problems/capital-gainloss/)
+  
   + 사고 판 내역이 한 테이블에 있을 때, 이익이 얼마인지!
+  
   + `if`로 - 만들어 주기
+  
+    + ```SQL
+      SELECT sum(if(operation='buy', -1, 1)*price)
+      ```
+  
+      
+  
 + [1407](https://leetcode.com/problems/top-travellers/)
+  
   + 명단 테이블과 이동거리 테이블이 있을 때, 각 사람들의 이동거리를 합해서 많이 이동한 순으로 보여주기
   + `left join`, `if` 로는 null을 0으로 처리
-
+  
 + [1158](https://leetcode.com/problems/market-analysis-i/)
+  
   + 2개 테이블 join 할 때, on에 and조건 넣으면 null도 0으로 처리할 수 있음
     + where에 넣으면 처리가 안됨..null인 것들이 없어져서 0으로 못만듦.
 
