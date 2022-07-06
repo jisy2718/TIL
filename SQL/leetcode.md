@@ -15,6 +15,7 @@
     + [Day8 Function](#Day8-Function)
     + [Day9 Control of Flow](#Day9-Control-of-Flow)
     + [Day10 Where](#Day10-Where)
+    + [복습](#복습)
 + [SQL1-공부내용](#sql1-공부내용)
   + [Day1](#day1)
   + [Day2](#day2)
@@ -263,7 +264,20 @@
 
 
 + [1084. Sales Analysis III](https://leetcode.com/problems/sales-analysis-iii/)
-  + 
+
+
+
+
+
+#### 복습
+
+**20220707**
+
++ [183](https://leetcode.com/problems/customers-who-never-order/)
+  + A,B 2개 테이블에 각각 사람있을 때, A테이블에서, B 테이블에 없는 사람 찾기
++ [607](https://leetcode.com/problems/sales-person/)
+  + 특정 테이블에 없는 사람 찾을 때는, join을 이용해서 null인 것 찾으면됨
+    + 즉 A 테이블에 없는 B 테이블 사람 찾으려면, `B left join A on 사람 where A.사람 is null`  
 
 
 
