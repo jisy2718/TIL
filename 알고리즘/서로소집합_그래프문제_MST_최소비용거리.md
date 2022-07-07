@@ -417,7 +417,62 @@ for tc in range(1,T+1):
 + 특성
   + 음의 가중치 허용
 
+  + 음의 사이클을 찾는 것이 목적 중 하나
 
+    
+
++ [위키백과참고](https://ko.wikipedia.org/wiki/%EB%B2%A8%EB%A8%BC-%ED%8F%AC%EB%93%9C_%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98)
+
+  + 가중 유향 그래프에서 최단 경로 문제 푸는 알고리즘
+  + V,E가 꼭지점과 변의 개수라면, 실행시간은 $O(|V||E|)$
+  + 다익스트라보다 느림
+    + 다익스트라는 음의 가중치에서 작동못함
+
++ 과정
+
+  + 매우 큰 값으로 거리 초기화
+  + 시작 노드에 대해서 0으로 거리 초기화
+  + 전체 노드의 개수 V 만큼 다음을 반복
+    + 각 노드에서 가능한 이동 가능한 모든 간선(E)을 확인
+      + 현재 간선을 거쳐서 다른 노드로 이동하는 거리가 더 짧으면, 거리 갱신
+
+  + 만약 V-1회 반복한 이후인, V번째 반복에서 값이 갱신되면 음수순환 존재
+
+
+
+
++ 코드
+
+  + ```PYTHON
+    # input 방법 1
+    arr = [[INF]*(V+1) for _ range(V+1)]
+    arr[v1][v2] != INF arr[v1][v2] 비용으로 v1에서 v2로 이동할 수 있도록 데이터 받기
+    
+    # input 방법 2 : 아래에서 이용
+    arr = [[start, end, distance], ... , ...] 꼴로 받기
+    
+    dist = [INF]*(V+1)
+    def bellman_ford(start):
+        dist[start] = 0
+        
+        for v in range(V):
+            # 모든 간선에 대해서, 새로운 이동거리가 더 짧을 수 있는지 확인
+            for j in range(len(arr)):
+                cur = arr[j][0]
+                next_node = arr[j][1]
+                d = arr[j][2]
+                # 만약 cur -> next_node 비용이 기존의 dist[next_node] 보다 적으면 갱신
+                if dist[cur] + d < dist[next_node] and dist[cur]!=INF: # 이동가능해야하므로 !INF
+                    dist[next_node] = dist[cur] + d
+                    if v == V-1:
+                        return True # 음의 순환 존재
+         return False
+                    
+                           
+                
+    ```
+
+  + 
 
 
 
