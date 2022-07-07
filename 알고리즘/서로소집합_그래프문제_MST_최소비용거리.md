@@ -419,8 +419,10 @@ for tc in range(1,T+1):
 
   + 음의 사이클을 찾는 것이 목적 중 하나
 
-    
+  + **노드개수 V개라면 V-1번 순회안에 무조건 최적경로 찾음**
 
+    
+  
 + [위키백과참고](https://ko.wikipedia.org/wiki/%EB%B2%A8%EB%A8%BC-%ED%8F%AC%EB%93%9C_%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98)
 
   + 가중 유향 그래프에서 최단 경로 문제 푸는 알고리즘
@@ -479,3 +481,56 @@ for tc in range(1,T+1):
 ## [3] 모든 정점들에 대한 최소 비용 계산
 
 ### (1) 플로이드-워샬(Floyd-Warshall) 알고리즘
+
++ 한 번 실행하여, 모든 노드 간의 최단 경로를 구할 수 있음
++ 음의 간선(가중치)도 사용 가능
++ 시간 복잡도가 크다 : $O(V^3)$
+
+
+
++ 과정
+  + 2차원 인접행렬로 graph 표현
+    + 자기자신은 0, 그외는 INF로 초기화
+  + 3중 루프를 이용해, i에서 j로 가는 거리와, i에서 k를 거쳐 j로 가는 거리를 비교해서 graph를 update 한다.
+
+
+
++ 코드 ([참고](https://im-so-so.tistory.com/19))
+
+  ```python
+  import heapq
+  
+  n, m, r = map(int, input().split())
+  
+  INF = float('INF')
+  graph = [[INF]*(n+1) for _ in range(n+1)]
+  
+  # 0 으로 초기화
+  for i in range(1, n+1):
+      graph[i][i] = 0
+  
+  # 거리 input 입력
+  for _ in range(r):
+      a, b, l = map(int, input().split())
+      graph[a][b] = l
+      graph[b][a] = l
+  
+  # 거리 비교
+  for k in range(1, n+1):
+      for i in range(1, n+1):
+          for j in range(1, n+1):
+              graph[i][j] = min(graph[i][j], graph[i][k]+graph[k][j])
+  
+  # 위 과정을 통해서, graph[i][j] 는 i에서 j까지가는 최단 거리가 입력되어 있음
+  ans = 0
+  for i in range(1, n+1):
+      tmp = 0
+      for j in range(1, n+1):
+          if graph[i][j] <= m:
+              tmp += items[j]
+      ans = max(ans, tmp)
+  
+  print(ans)
+  ```
+
+  
