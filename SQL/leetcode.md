@@ -64,9 +64,11 @@
     ```
   
 + [627](https://leetcode.com/problems/swap-salary/)
-  + `update set`
+  
+  + `update & set`
   
 + [196](https://leetcode.com/problems/delete-duplicate-emails/)
+  
   + `delete`
 
 
@@ -277,11 +279,35 @@
   + A,B 2개 테이블에 각각 사람있을 때, A테이블에서, B 테이블에 없는 사람 찾기
 + [607](https://leetcode.com/problems/sales-person/)
   + 특정 테이블에 없는 사람 찾을 때는, join을 이용해서 null인 것 찾으면됨
-    + 즉 A 테이블에 없는 B 테이블 사람 찾으려면, `B left join A on 사람 where A.사람 is null`  
+    + 즉 A 테이블에 없는 B 테이블 사람 찾으려면, `B left join A on 사람 where A.사람 is null`  '
 
 
 
+**20220708**
 
++ [1873](https://leetcode.com/problems/calculate-special-bonus/)
+  + `IF` 와 `LIKE "M%"` 활용
+
+
+
++ [627](https://leetcode.com/problems/swap-salary/)
+  + `update & set` 활용
+
+
+
++ [196](https://leetcode.com/problems/delete-duplicate-emails/)
+
+  + `delete`
+
++ [1667](https://leetcode.com/problems/fix-names-in-a-table/)
+
+  + `UPPER(), LOWER(), SUBSTR(컬럼,시작글자,끝글자(없으면끝까지)), CONCAT()`
+
++ [1484](https://leetcode.com/problems/group-sold-products-by-the-date/)
+
+  + 하나의 컬럼에 여러 종류 데이터 행별로 있는 것, 묶어서 하나로 만들기
+
+  + `GROUP_CONCAT(field_name ORDER BY filed_name SEPORATOR ',')`
 
 
 
