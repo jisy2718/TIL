@@ -16,6 +16,9 @@
     + [Day9 Control of Flow](#Day9-Control-of-Flow)
     + [Day10 Where](#Day10-Where)
     + [복습](#복습)
+      + [20220707](#20220707)
+      + [20220708](#20220708)
+      + [20220709](#20220709)
 + [SQL1-공부내용](#sql1-공부내용)
   + [Day1](#day1)
   + [Day2](#day2)
@@ -131,8 +134,9 @@
     
   
 + [1527](https://leetcode.com/problems/patients-with-a-condition/)
+  
   + `LIKE "%"` 
-
+  
   
 
 
@@ -273,7 +277,7 @@
 
 #### 복습
 
-**20220707**
+##### 20220707
 
 + [183](https://leetcode.com/problems/customers-who-never-order/)
   + A,B 2개 테이블에 각각 사람있을 때, A테이블에서, B 테이블에 없는 사람 찾기
@@ -283,7 +287,7 @@
 
 
 
-**20220708**
+##### 20220708
 
 + [1873](https://leetcode.com/problems/calculate-special-bonus/)
   + `IF` 와 `LIKE "M%"` 활용
@@ -308,6 +312,29 @@
   + 하나의 컬럼에 여러 종류 데이터 행별로 있는 것, 묶어서 하나로 만들기
 
   + `GROUP_CONCAT(field_name ORDER BY filed_name SEPORATOR ',')`
+
+
+
+
+
+##### 20220709
+
++ [1527](https://leetcode.com/problems/patients-with-a-condition/)
+
+  + LIKE에 띄워쓴 것도 가능
+    + `LIKE "% DIAB1%"`
+
++ **[1965](https://leetcode.com/problems/employees-with-missing-information/)**
+
+  + `UNION` 
+
++ [1795](https://leetcode.com/problems/rearrange-products-table/)
+
+  + `UNION`
+  + 특정 문자열로 채워진 컬럼 만들기
+    + `SELECT "store1" store from products` 와 같이 하면, store라는 컬럼이 생기는데, 내용이 "store1"임. 
+
+  
 
 
 

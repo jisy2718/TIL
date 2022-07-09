@@ -4,7 +4,21 @@
 
 ## 목차
 
++ [tensor&layer&역전파]()
++ [model]()
+  + 생성(Sequential, Functional, Subclassing), 내부접근, complie(optimizer, loss, metrics) , 학습 및 평가 예측, 저장 및 복원, callbacks
 
++ [과소/과대적합
+
+  + 방지법,
+
++ 실습
+
+  + [MINIST]()
+
+  + [Fashion MNIST]()
+
+    
 
 
 
