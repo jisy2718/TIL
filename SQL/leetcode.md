@@ -341,7 +341,8 @@
   + `NULL` 을 컬럼에 넣으려면, 없는 데이터에 `SELECT`를 한 번 더 하면 됨
 
 + [175](https://leetcode.com/problems/combine-two-tables/)
-  + 2개 table left join
+  + 2개 table `left join`
++ 
 
 
 
