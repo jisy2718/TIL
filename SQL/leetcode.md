@@ -323,20 +323,25 @@
 
   + LIKE에 띄워쓴 것도 가능
     + `LIKE "% DIAB1%"`
-
 + **[1965](https://leetcode.com/problems/employees-with-missing-information/)**
 
   + `UNION` 
-
 + [1795](https://leetcode.com/problems/rearrange-products-table/)
 
   + `UNION`
   + 특정 문자열로 채워진 컬럼 만들기
     + `SELECT "store1" store from products` 와 같이 하면, store라는 컬럼이 생기는데, 내용이 "store1"임. 
 
-  
 
+##### 20220710
 
++ [608](https://leetcode.com/problems/tree-node/)
+  + `CASE WHEN 조건 THEN 결과 WHEN 조건 THEN 결과 ... ELSE 결과  END`
++ [176](https://leetcode.com/problems/second-highest-salary/)
+  + `NULL` 을 컬럼에 넣으려면, 없는 데이터에 `SELECT`를 한 번 더 하면 됨
+
++ [175](https://leetcode.com/problems/combine-two-tables/)
+  + 2개 table left join
 
 
 
