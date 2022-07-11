@@ -346,6 +346,16 @@
 
 
 
+##### 20220712
+
++ [1581](https://leetcode.com/problems/customer-who-visited-but-did-not-make-any-transactions/)
+  + 방문내역과 거래내역 table 2개가 주어질 때, 거래를 하지 않고, 방문한 고객 찾기
++ [1148](https://leetcode.com/problems/article-views-i/)
+  + `distinct`와 `group by` 이용
+  + 이중 select도 해보기
+
+
+
 ## SQL1-공부내용
 
 ### Day1
