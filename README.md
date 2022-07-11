@@ -11,11 +11,9 @@
 ## 목차
 
 + [python](#python)
-+ [알고리즘](#알고리즘)
++ [알고리즘이론](#알고리즘)
 + [LEETCODE&백준](#LEETCODE&백준)
-
-+ [Front-end](#Front-end)
-
++ [Web](#Web)
 + [DL](#DL)
 + 
 
@@ -104,7 +102,11 @@
 
 
 
-### Front-end
+### [Web](html_css)
+
++ [html](html_css/html.md) (보강필요)
++ css
++ bootstrap
 
 + [react](react/react.md)
 
