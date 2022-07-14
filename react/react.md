@@ -12,6 +12,12 @@
 
 
 
++ [2.인프런-처음만난리액트](#2.인프런-처음만난리액트)
+
+
+
+
+
 + [참고](#[99]-참고)
 
 
@@ -396,6 +402,128 @@
   1. useState만들 때 함께 만들어놨던 따봉변경() 글제목변경() 이런 함수를 쓰시면 됩니다. 
   2.  근데 array 자료라면 그냥 대충 등호 이런걸로 변경하면 안되고 사본을 만들어서 그걸 변경하셔야합니다. 
   3. 사본 만드는 법은 let newArray = [...기존state이름] 이렇게 만드신 다음 newArray를 수정해서 글제목변경(newArray) 이렇게 하셔야 제대로 state 변경이 가능합니다.
+
+
+
+
+
+
+
+
+
+
+
+# 2.인프런-처음만난리액트
+
+## Sec1
+
+
+
+## Sec2
+
+
+
+
+
+## Sec3 - JSX 
+
+### [1] JSX의 정의와 역할
+
++ 정의
+
+  + JSX = A syntax extension to JavaScript
+
+  + JS + XML/HTML 임
+
+    + JS의 문법을 확장
+
+      
+
++ JSX 예제 코드
+
+  + ```JSX
+    const element = <h1>Hello, world! </h1>;
+    ```
+
+    + `const element` 는 JS, `<h1> </h1>`은 HTML
+
+
+
++ JSX 역할
+
+  + 내부적으로 XML / HTML 코드를 JS로 변환하는 과정을 거침
+
+    + 즉 JSX로 작성해도,  JS 결과물이 나옴
+
+  +  `React.createElement`
+
+    + XML / HTML을 JS로 변환하는 역할
+
+  + JSX 예제 코드
+
+    + ```JSX
+      class Hello extends React.Component {
+          render() {
+              return <div> Hello {this.props.toWhat} </div>;
+          }
+      }
+      
+      ReactDom.render(
+      	<Hello toWaht="World"/>,
+          document.getElementById('root')
+      );
+      ```
+
+  + JSX를 사용하지 않은 예제 코드
+
+    + ```JS
+      class Hello extends React.Component {
+          render() {
+              return React.createElement('div', null, `Hello ${this.props.toWhat}`);
+          }
+      }
+      
+      ReactDom.render(
+           React.createElement(Hello, { toWhat: 'World' }, null),
+          document.getElementById('root')
+      );
+      ```
+
+    +  3분 36초
+
+
+
+
+
+### [2] JSX의 장점 및 사용법
+
+
+
+
+
+### [3] JSX 코드 작성해보기
+
+
+
+
+
+
+
+
+
+## Sec4
+
+
+
+
+
+## Sec5
+
+
+
+
+
+
 
 
 
