@@ -1956,17 +1956,414 @@ componentDidMount(){
 
 
 
+## Sec 8 - Contidional rendering
+
+### [1] Conditional Rendering의 정의
+
++ 어떠한 조건(if)에 따라서 렌더링이 달라지는 것
+
+  + 예
+
+    + True이면 버튼 보여주고 / False면 버튼 가리기
+
+    + ```tsx
+      function Greeting(props){
+          const isLoggedIn = props.isLoggedIn;
+          
+          if (isLoggedIn){
+              return <UserGreeting />;
+          }
+          return <GuestGreeting />;
+          
+      }
+      ```
+
+    + 
 
 
-## 못한 부분
 
-|      | tsx                                                          | jsx         |
-| ---- | ------------------------------------------------------------ | ----------- |
-| Sec4 | clock 에러 메세지 / 작동은 됨                                |             |
-| Sec5 | Comment의 style에서 Type 'string' is not assignable to type 'FlexDirection \|\| undefined ERROR | undefined'. |
-| Sec6 | 안함                                                         |             |
-| Sec7 | onClick 의 Type 'number  (() => void)' is not assignable to type 'MouseEventHandler<HTMLButtonElement> undefined'. 문제 |             |
-| Sec8 | isConfirmed<br />                                            |             |
+### [2] Turth / Falsy
+
++ T
+  + ture, {}, [], 42 , "0", "false"
+
++ F
+  + 0, -0 , 0n, '' , "",``, null, undefined, NaN
+
+
+
+### [3] Element Variable
+
++ 리액트 엘리먼트를 변수처럼 다루는 것
+
++ ![image-20220718075228855](react.assets/image-20220718075228855.png)
+
+
+
+### [4] inline conditions (꼭기억)
+
++ 조거문을 코드 안에 집어 넣어서 쓰는 것
+
+
+
++ `inline if`
+  + `&&` 를 이용
+  + 단축평가
+    + 첫 결과가 True => 다음 expression도  확인
+    + 첫 결과가 False => 뒤의 expression은 확인 x
+  + return 값
+    + 첫 결과가 False => False에 해당하는 값 return 됨
+  + 예시
+    + ![image-20220718075504548](react.assets/image-20220718075504548.png)
+
+
+
++ `inline if-else`
+
+  + 조건문의 값에 따라서 다른 결과를 보여줄 때
+
+  + 삼항 연산자 `?` 를 이용
+
+    + `condition ? true : false`
+
+  + 코드 예시
+
+    + ![image-20220718075636441](react.assets/image-20220718075636441.png)
+
+    + ![image-20220718075728171](react.assets/image-20220718075728171.png)
+
+
+
+
+
+### [5] Component 렌더링 하지 않으려면
+
++ `null`을 return하면 됨
+  + ![image-20220718075816817](react.assets/image-20220718075816817.png)
+    + True일 때는 경고! 하지만, False일 때는 아무것도 안함
+    + ![image-20220718075848872](react.assets/image-20220718075848872.png)
+
+
+
+## Sec 10 - List와 Key
+
+
+
+### [1] List와 Keys
+
+#### (1) List
+
++ 배열
+
+  + ```tsx
+    const numbers = [1,2,3,4,5]
+    ```
+
+
+
+#### (2) keys
+
++ 각자 고유하다 == 아이템들을 구분하기 위한 고유한 문자열
+
+
+
+### [2] 여러개의 Component 렌더링 하기
+
+#### (1) `map()` 함수
+
++ 배열의 각 변수에 어떤 처리를 한 뒤 배열을 return
+
++ map 함수 안의 elements는 꼭 key가 필요함
+
++ 코드
+
+  + ```tsx
+    const doubled = numbers.map( (number)=> number*2 )
+    ```
+
+  + ```tsx
+    const numbers = [1,2,3,4,5];
+    const listItems = numbers.map(  (number)=> <li>{number}</li>);
+    
+    ReactDom.render(
+    	<ul>{listItems}</ul>
+        document.getElementById('root'));
+    
+    >>> 실제 렌더링 결과
+    ReactDom.render(
+    	<il>{1}</il>
+        <il>{2}</il>
+        <il>{3}</il>
+        <il>{4}</il>
+        <il>{5}</il>
+        document.getElementById('root'));
+    ```
+
+  + 
+
+
+
+### [3] List의 key
+
++ 값과 id 사용
+
+  + 값
+
+    + ![image-20220718081248623](react.assets/image-20220718081248623.png)
+
+  + id
+
+    + ![image-20220718081334623](react.assets/image-20220718081334623.png)
+
+  + index
+
+    + ![image-20220718081307233](react.assets/image-20220718081307233.png)
+
+    + 정의하지 않으면 key로 index를 사용함
+    + 성능 저하 일어나므로, id 있으면, id 쓰기
+
+
+
+
+
++ chap 12
+
+  + `{ [ key : string ] : string}`
+
++ chap 13
+
+  + `useState<string>('c')`  처럼 type 지정 해주기
+
++ chap 14
+
+  + `export` : 다른 page에서 함수나 객체를 사용하고 싶을 때 이용
+
+    + export default : 페이지 전체를 객체로함
+    + export 개별 : 개별로 객체 취급
+
+  + ```tsx
+    export type ThemeType = {
+        theme : string;
+        toggleTheme : () => void;   // 요게 정형화 되어 있음
+        // state를 변경하는 함수나, event 함수를 실행시킬 때는 return 값없으므로 void로 해주면 됨.
+    }
+    
+    // 다른 곳에서 아래가 가능해짐
+    import { themeContext, ThemeType } from './파일명'
+    ```
+
+  + ```tsx
+    import { state, ReactElement } from 'react'
+    function MainContetn() : ReactElement { // ReactElement 기억
+        const {theme, toggletheme} : ThemeType = useContext(ThemeContex);
+    }
+    ```
+
+  + 
+
+
+
+
+
+## Sec 11 - Forms
+
+### [1] Form과 Controlled component
+
+#### (1) Form 이란
+
++ 사용자로부터 입력을 받기 위해 사용
+  + 체크박스,  select 등 사용자가 선택하는 모든 것
+
+##### (a) react from & html form
+
++ react form은 component 내부에서 state를 통해 데이터 관리 
+
++ HTML form은 Element 내부에 각각의 state가 존재
+
++ 코드
+
+  + HTML Form
+
+    + ```html
+      <form>
+          <label>
+          	이름:
+              <input type="text" name="name" />
+          </label>
+      	<button type="submit">  제출    </button>
+      </form>
+      ```
+
+    + JS 코드로 사용자가 입력한 값에 접근하고 제어하기는 쉽지 않음
+
++ 사용자가 입력한 값에 접근하고 제어할 수 있는 **Controlled component**
+
+
+
+#### (2) Controlled Component
+
++ 사용자가 입력한 값에 접근하고 제어할 수 있는 **Controlled component**
+
+  + 입력 양식의 초기값 자유롭게 설정가능
+  + 다른 양식의 값이 변경되면, 또 다른 양식의 값도 자동으로 변경시킬 수 있음
+
++ 값이 리액트의 통제를 받는 Input form element
+
+  
+
+##### (a) HTML Form vs. Controlled Component
+
++ ![image-20220718222427414](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20220718222427414.png)
+
+
+
+##### (b) Controlled Component 코드 예시
+
+1. 위의 HTML 코드를 리액트의 Controlled Component로 만든 것
+
+![image-20220718222640601](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20220718222640601.png)
+
++ event.target : 현재 이벤트 타겟
+
+  + event.target은 input element
+
+  + event.target.value는 input element의 value
+
+
+
+2. 모든 입력값을 대문자로 변경
+
+   ```tsx
+   const handleChange = (event) => {
+       setValue(event.target.value.toUpperCase());
+   }
+   ```
+
+
+
+
+
+
+
+### [2] 다양한 Forms
+
+#### (1) textarea 태그
+
++ 코드
+
+  + ```TSX
+    // 1. HTML 버전
+    <textarea>
+    	안녕하세요, 여기에 이렇게 텍스트가 들어가게 됩니다.
+    </textarea>
+    
+    // 2. React Controlled Component 버전
+    // useState('요청사항을 입력하세요') 부분의 value가, 아래의 value={value}의 초기값으로 들어감
+    ```
+
+  + ![image-20220718223315165](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20220718223315165.png)
+
+
+
+#### (2) Select 태그
+
++ Drop-down 목록을 보여주기 위한 HTML 태그
+
+  + 여러 옵션 중 1개 선택 가능
+
+  ##### (a) 코드
+
+  + ```tsx
+    // 1.HTML
+    <select>
+    	<option value="apple"> 사과 </option>
+        <option value="banana"> 바나나 </option>
+        <option selected value="grape"> 포도 </option>  // 선택됨!
+    </select>
+    
+    // 2. React Controlled Component 버전
+    // useState('grape') 부분의 value가 value={value} 의 초기값으로 들어감.
+    // 값이 바뀌면 handleChange 실행
+    ```
+
+  + ![image-20220718223542760](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20220718223542760.png)
+
+
+
+##### (b) `multiple` 옵션
+
++ `<select multiple={true} value={['B','C']}`>
+
+
+
+##### (c) Controlled Component 요약
+
++ ![image-20220718224035880](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20220718224035880.png)
+
+
+
+
+
+
+
+#### (3) File input 태그
+
++ 디바이스의 저장장치로부터, 사용자가 하나/여러개 의 파일을 선택할 수 있게 해주는 HTML 태그
++ 읽기 전용이므로, React에서는 Uncontrolled component(=리액트의 통제를 받지 않음)
+
+##### (a) 코드
+
+```html
+// 1. HTML
+<input type='file'/>
+```
+
+
+
+##### (b) Multiple Inputs
+
++ 여러 개의 state를 선언하여, 각각의 입력에 대해 사용
+
+
+
+
+
+#### (4) Input Null value
+
++ 초기값으로 null을 넣어주면, 사용자가 값을 변경할 수 있게 됨
+  + `ReactDOM.render(<input value={null} />, rootNode);`
+
+
+
+
+
+### [3] 사용자 정보 입력 받기 (실습)
+
+
+
+
+
+## 못한 부분 & 고친 것
+
+| tsx    | 못한 부분                                                    | 고친부분                                                     |
+| ------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Sec4   | clock 에러 메세지 / 작동은 됨                                |                                                              |
+| Sec5   | Comment의 style에서 Type 'string' is not assignable to type 'FlexDirection \|\| undefined ERROR undefined'. | `style={styles.wrapper as React.CSSProperties}`              |
+| Sec6   | 안함                                                         |                                                              |
+| Sec7   | onClick 의 Type 'number  (() => void)' is not assignable to type 'MouseEventHandler<HTMLButtonElement> undefined'. 문제 | `onClick={increaseCount as React.MouseEventHandler}`         |
+| Sec8   | isConfirmed<br />                                            |                                                              |
+| Sec9   | const 부분과 style                                           | interface toolbarProps{<br />isLoggedIn : boolean;<br />onClickLogin : () => void;<br />onClickLogout : () => void;<br />} |
+| Sec 10 |                                                              | `type student = {id : number,name : string}`                 |
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2080,7 +2477,7 @@ componentDidMount(){
 
   + 그 후, src(root)에 `.eslintignore, .eslintrc.js` 파일 생성 후 아래 코드 넣기
 
-  + eslintignore
+  + ~~eslintignore (없어야 함)~~
 
     + elint 적용을 받지 않게 할 파일 및 폴더
 
@@ -2091,7 +2488,7 @@ componentDidMount(){
 
       
 
-  + eslintrc.js
+  + ~~eslintrc.js (없어야 함)~~
 
     + eslint를 어떤 plugin으로 어떤 rule로 적용할 것인지 정하는 파일 
 
@@ -2194,7 +2591,7 @@ componentDidMount(){
 
       
 
-+ 프로젝트 root(src)에 `.prettierrc` 파일 생성 및 설정
++ ~~프로젝트 root(src)에 `.prettierrc` 파일 생성 및 설정(없어야함)~~
 
   + 옵션 설정
 
