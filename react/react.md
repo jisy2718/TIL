@@ -2343,6 +2343,52 @@ componentDidMount(){
 
 
 
+
+
+
+
+
+
+
+
+
+
+## Sec 12 - Lifting State Up
+
+
+
+### [1] Shared State
+
+#### (1) 의미
+
++ 하위 컴포넌트가 공통된 부모 컴포넌트의 **state를 공유**하여 사용 하는 것 
+
+  + State에 있는 데이터를 여러 하위 컴포넌트에서, 공통적으로 사용하는 경우를 말함
+
+  
+
+#### (2) 예
+
++ <img src="C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20220719231725488.png" alt="image-20220719231725488" style="zoom:30%;" />
++ <img src="C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20220719231801919.png" alt="image-20220719231801919" style="zoom:30%;" />
+
+
+
+
+
+### [2] 하위 컴포넌트에서 State 공유하기
+
+#### (1)  Lifting State Up
+
++ 하위 컴포넌트의 State를 공통 상위 컴포넌트로 올림
+
++ 예
+  + <img src="C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20220719233026622.png" alt="image-20220719233026622" style="zoom:33%;" />
+
+
+
+
+
 ## 못한 부분 & 고친 것
 
 | tsx    | 못한 부분                                                    | 고친부분                                                     |
@@ -2354,6 +2400,7 @@ componentDidMount(){
 | Sec8   | isConfirmed<br />                                            |                                                              |
 | Sec9   | const 부분과 style                                           | interface toolbarProps{<br />isLoggedIn : boolean;<br />onClickLogin : () => void;<br />onClickLogout : () => void;<br />} |
 | Sec 10 |                                                              | `type student = {id : number,name : string}`                 |
+| Sec11  | event의 type                                                 | type InputEvent = React.ChangeEvent<HTMLInputElement>;<br /> type SelectEvent = React.ChangeEvent<HTMLSelectElement>; <br />type SubmitEvent = React.FormEvent<HTMLFormElement>; |
 
 
 
