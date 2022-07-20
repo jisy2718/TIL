@@ -2389,6 +2389,299 @@ componentDidMount(){
 
 
 
+### [3] 섭씨온도와 화씨온도 표시하기 (실습)
+
+
+
+
+
+
+
+## Sec 13 - Composition vs. Inheritance
+
+### [1] Composition 방법과 Inheritance
+
+
+
+#### (1) Composition(합성)
+
++ **여러 개의 컴포넌트를 합쳐서, 새로운 컴포넌트를 만드는 것**을 의미
+
+
+
+##### (a) 합성 방법 1 : Containment
+
++ **하위 컴포넌트를 포함하는 형태의 합성 방법**
+
+  + 보통 sidebar나 dialog같은 box형태의 컴포넌트는 자신의 하위 컴포넌트를 미리 알 수 없음 => 이럴 때 이용
+  + children 속성을 이용
+
++ 예
+
+  + ```tsx
+    // children prop을 사용한 FancyBorder 컴포넌트
+    function FancyBorder(props) {
+        return (
+        	<div className={ 'FancyBorder FancyBorder-' + props.color }>
+            	{ props.children }
+            </div>
+        )
+    }
+    
+    // children이 배열인 이유는, 여러개의 하위컴포넌트를 가질 수 있기 때문
+    React.createElement(
+    	type,
+    	[props],
+    	[...children])
+    
+    
+    // FancyBorder 컴포넌트 안에 있는 모든 tsx 태그는 children으로 전달됨
+    // h1 tag, p tag는 모두 FancyBorder 컴포넌트의 children이라는 props로 전달됨(props.children)
+    function WelcomeDialog(props){
+        return (
+        	<FancyBorder color="blue">
+            	<h1 classname="Dialog-title">
+                	어서오세요
+                </h1>
+            	<p className="Dialog-message">
+                	우리 사이트에 방문하신 것을 환영합니다!
+                </p>
+            </Fancyborder>
+        );
+    }
+    ```
+
++ 여러 개의 children 집합이 필요한 경우는 어떻게 할까?
+
+  + ```tsx
+    // SplitPane은 App에서 left와 right라는 props를 받게 되고, 이를 좌, 우로 표시하게 됨
+    function SplitPane(props){
+        return (
+        	<div className="SplitPane">
+            	<div className="Splitpane-left">
+                	{props.left}
+                </div>
+                <div classname="Splitpane-right">
+                	{props.right}
+                </div>
+            </div>
+        );
+    }
+    
+    function App(props){
+        return (
+        	<SplitPane left={ <Contacts /> } right={ <Chat /> } />
+        );
+    }
+    ```
+
+  + 
+
+
+
+
+
+##### (b) 합성방법 2 : Specialization
+
++ **범용적인 개념을 구별이 되게 구체화 하는 것**
+  + 기존의 객체지향 언어에서는 상속을 사용하여, Specialization을 구현함
+  + 리액트에서는 합성(composition)을 이용해서, Specializaion을 구현함
+
++ 예시설명
+
+  + WelcomeDialog는 Dialog의 특별한 케이스이다.
+
++ 코드
+
+  + ```tsx
+    function Dialog(props){
+        return (
+        	<FancyBorder color="blue">
+            	<h1 classname="Dialog-title">
+                	{props.title}
+                </h1>
+            	<p className="Dialog-message">
+                	{props.message}
+                </p>
+            </Fancyborder>
+        
+        );
+    }
+    
+    function WelcomeDialog(props){
+        return (
+        	<Dialog 
+                title="어서오세요"                                      // Specialization
+                message="우리 사이트에 방문하신 것을 환영 합니다." />       // Specialization
+        );
+    }
+    ```
+
+  + 
+
+
+
+**Containment와 Specializaiton**을 같이 사용하기
+
++ Containment
+
+  + props.children 사용
+
++ Specialization
+
+  + 직접 정의한 props 사용
+
++ 코드
+
+  + ```tsx
+    function Dialog(props){
+        return (
+        	<FancyBorder color="blue">
+            	<h1 classname="Dialog-title">
+                	{props.title}
+                </h1>
+            	<p className="Dialog-message">
+                	{props.message}
+                </p>
+                {props.children}  //추가 => 하위 컴포넌트가, Dialog 하단에 렌더링 됨
+            </Fancyborder>
+        
+        );
+    }
+    ```
+
+  + <img src="C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20220720214710451.png" alt="image-20220720214710451" style="zoom:70%;" />
+
+
+
+
+
+#### (2) Inheritance
+
++ Composition과 반대되는 개념
++ **다른 컴포넌트로부터 상속을 받아서, 새로운 컴포넌트를 만드는 것**
+  + 비추천하는 방법임
+  + composition 이용하는 것 추천
+
+
+
+#### (3) 요약
+
++ Composition을 이용하고, Inheritance는 이용하지 말자
++ 복잡한 컴포넌트를 쪼개서 여러 개의 컴포넌트로 만들고, 만든 컴포넌트들을 조합해서, 새로운 컴포넌트를 만들자!
+
+
+
+
+
+### [2] Card 컴포넌트 만들기 (실습)
+
+#### (1) && 연산자
+
+```tsx
+{/* specialization */}
+            {title && <h1>{title}</h1>}
+```
+
++ `조건 && expression` 에서, 
+
+  + 조건이 참 => expression으로 평가됨
+  + 조건이 거짓 => React는 해당 코드 무시함 
+
++ 이 경우 `title=''` 과 같이 하면 `<h1>` 태그는 렌더링 되지 않음
+
+  + ```tsx
+    function ProfileCard(){
+        return (
+            <Card  title="" backgroundColor="red">  => title 렌더링 안됨
+                <p> 안녕하세요, Ji 입니다1</p>
+                <p> 안녕하세요, Ji 입니다2</p>
+            </Card>
+        );
+    }
+    ```
+
+  + 
+
+
+
+## Sec 14 - Context
+
+
+
+### [1] Context 란
+
+##### (1) Context 개념과 장점
+
++ **컴포넌트 트리를 통해 곧바로 컴포넌으로 데이터를 전달하는 방식**
+  + 기존에는 props를 통해서 데이터를 전달했음
+  + vue에서도 같은 이유로 state 사용했음
++ 장점
+  + 코드 깔끔해짐
+  + 데이터 한 곳에서 관리
+  + 따라서 디버깅에도 유리해짐
+
+
+
++ 그림으로 이해
+  1. props 이용
+     + <img src="C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20220720220901988.png" alt="image-20220720220901988" style="zoom:50%;" />
+  2. context 이용
+     + <img src="C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20220720220953503.png" alt="image-20220720220953503" style="zoom:50%;" />
+
+
+
+#### (2) 언제 Context 사용해야할까?
+
++ **다른 레벨의 여러 컴포넌트가, 특정 데이터를 자주 필요로 하는 경우**에 주로 사용
+
++ 여러 컴포넌트에서 자주 접근해야 하는 데이터
+  + 로그인 여부, 로그인 정보, UI 테마, 현재 언어 등...
+  + props의 비효율예
+    + <img src="C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20220720221230208.png" alt="image-20220720221230208" style="zoom:67%;" />
+  + context를 사용해서, 동일 기능 작성
+    + <img src="C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20220720221342076.png" alt="image-20220720221342076" style="zoom:80%;" />
+
+
+
+
+
+
+
+#### (3) context 쓰지 않고, 효율적으로 데이터 전달하기 (Element Variable)
+
++ 코드
+  + <img src="C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20220720221647985.png" alt="image-20220720221647985" style="zoom:80%;" />
+
++ 이 방법 단점
+  + 데이터가 많아질 수록, 상위 컴포넌트는 복잡해지고, 하위 컴포넌트는 너무 유연해짐
+
+
+
++ 개선한 방법
+  + 코드
+    + <img src="C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20220720221831084.png" alt="image-20220720221831084" style="zoom:80%;" />
+
+
+
+
+
+
+
+## 데이터 전달 방법
+
+### [1] Composition (Sec13)
+
+### [2] Context (Sec14)
+
+### [3] Element Variable 형태로 전달 (Sec8-[3])
+
+
+
+
+
+
+
 ## 못한 부분 & 고친 것
 
 | tsx    | 못한 부분                                                    | 고친부분                                                     |
@@ -2400,11 +2693,8 @@ componentDidMount(){
 | Sec8   | isConfirmed<br />                                            |                                                              |
 | Sec9   | const 부분과 style                                           | interface toolbarProps{<br />isLoggedIn : boolean;<br />onClickLogin : () => void;<br />onClickLogout : () => void;<br />} |
 | Sec 10 |                                                              | `type student = {id : number,name : string}`                 |
-| Sec11  | event의 type                                                 | type InputEvent = React.ChangeEvent<HTMLInputElement>;<br /> type SelectEvent = React.ChangeEvent<HTMLSelectElement>; <br />type SubmitEvent = React.FormEvent<HTMLFormElement>; |
-
-
-
-
+| Sec11  | event의 type                                                 | `type InputEvent = React.ChangeEvent<HTMLInputElement>;`<br />` type SelectEvent = React.ChangeEvent<HTMLSelectElement>; `<br />`type SubmitEvent = React.FormEvent<HTMLFormElement>;` |
+| Sec13  | children props의 type                                        | `children : React.ReactNode`                                 |
 
 
 
