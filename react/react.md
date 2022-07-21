@@ -2668,6 +2668,42 @@ componentDidMount(){
 
 
 
+
+
+### [2] Context API
+
+#### (1) `React.createContext()`
+
+##### (a) context 객체 만들기
+
++ ```tsx
+  const MyContext = React.createContext(기본값);
+  ```
+
+  + 만약 상위 레벨에 매칭되는 Provider 가 없다면 기본값 사용됨
+  + 기본값으로 `undefinded` 사용되면, 기본값 사용되지 않음
+
+##### (b) `Context.Provider`
+
++ 모든 context 객체는 **Provider**라는 리액트 컴포넌트를 가지고 있다.
+
++ `context.provider` 컴포넌트로 하위 컴포넌트 감싸주면, 모든 하위 컴포넌트들이 해당 컴포넌트의 데이터에 접근할 수 있음
+
++ ```tsx
+  // provider 사용  : value를 하위 컴포넌트에 전달
+  <MyContext.Provider value={/* some value */}></MyContext.Provider>
+  ```
+
++ **consuming 컴포넌트**
+
+  + provider가 제공하는 value를 사용하는 컴포넌트를 의미
+  + context(provider) 값의 변화를 지켜보다가, 값이 변경되면 재 렌더링 됨
+
+   + 		값 변화의 판단
+       	+ 		js의 `object.is `와 같은 기준으로 판단
+
+
+
 ## 데이터 전달 방법
 
 ### [1] Composition (Sec13)

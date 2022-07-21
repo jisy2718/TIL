@@ -19,6 +19,8 @@
       + [20220707](#20220707)
       + [20220708](#20220708)
       + [20220709](#20220709)
+      + [20220712](#20220712)
+      + [20220721](#20220721)
 + [SQL1-공부내용](#sql1-공부내용)
   + [Day1](#day1)
   + [Day2](#day2)
@@ -353,6 +355,16 @@
 + [1148](https://leetcode.com/problems/article-views-i/)
   + `distinct`와 `group by` 이용
   + 이중 select도 해보기
+
+
+
+
+
+
+
+##### 20220721
+
++ [197](https://leetcode.com/problems/rising-temperature/)
 
 
 
